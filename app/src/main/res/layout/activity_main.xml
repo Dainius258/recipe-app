@@ -27,7 +27,7 @@
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/tbNavbar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ImageButtonFilter"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonFilter"
         app:layout_constraintTop_toTopOf="@+id/tbNavbar" />
 
     <androidx.appcompat.widget.Toolbar
@@ -43,7 +43,7 @@
 
 
     <ImageButton
-        android:id="@+id/ImageButtonFilter"
+        android:id="@+id/imageButtonFilter"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="6dp"
@@ -53,4 +53,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/IconFilter" />
+
+    <ImageButton
+        android:id="@+id/imageButtonFavourites"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Favourites tab"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/FavouritesButton" />
+
+    <ImageButton
+        android:id="@+id/imageButtonAddRecipe"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Add recipes tab"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonAccount"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonFavourites"
+        app:srcCompat="@drawable/AddRecipeButton" />
+
+    <ImageButton
+        android:id="@+id/imageButtonAccount"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Add recipes tab"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/AccountButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
