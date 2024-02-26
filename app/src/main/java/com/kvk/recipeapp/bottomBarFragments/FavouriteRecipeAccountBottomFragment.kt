@@ -1,11 +1,12 @@
-package com.kvk.recipeapp
+package com.kvk.recipeapp.bottomBarFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageButton
+import com.kvk.recipeapp.R
+import com.kvk.recipeapp.contentFragments.FavouriteRecipeListFragment
+import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -20,7 +21,9 @@ class FavouriteRecipeAccountBottomFragment : Fragment(R.layout.fragment_favourit
         favouriteButton.setOnClickListener{
             val fragmentTransaction = parentFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
+
             fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
+            fragmentTransaction.replace(R.id.flFragmentContents, MainRecipeListFragment())
             fragmentTransaction.commit()
         }
     }
