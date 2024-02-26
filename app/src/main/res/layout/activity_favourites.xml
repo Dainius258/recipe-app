@@ -8,13 +8,6 @@
     tools:context=".MainActivity">
 
 
-    <FrameLayout
-        android:id="@+id/flFragmentBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout="@layout/fragment_favourite_recipe_account_bottom" />
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbNavbar"
         android:layout_width="0dp"
@@ -37,6 +30,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButtonFilter"
         app:layout_constraintTop_toTopOf="@+id/tbNavbar" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbFooter"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/mint"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+
+
     <ImageButton
         android:id="@+id/imageButtonFilter"
         android:layout_width="48dp"
@@ -50,19 +58,19 @@
         app:srcCompat="@drawable/icon_filter" />
 
     <ImageButton
-        android:id="@+id/imageButtonFavourites"
+        android:id="@+id/imageButtonHome"
         android:layout_width="80dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="4dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Favourites tab"
+        android:contentDescription="Home tab"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/favourites_button" />
+        app:srcCompat="@drawable/home_button" />
 
     <ImageButton
         android:id="@+id/imageButtonAddRecipe"
@@ -73,10 +81,10 @@
         android:contentDescription="Add recipes tab"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonAccount"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonFavourites"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonHome"
         app:srcCompat="@drawable/add_recipe_button" />
 
     <ImageButton
@@ -89,8 +97,9 @@
         android:contentDescription="Add recipes tab"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/account_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
