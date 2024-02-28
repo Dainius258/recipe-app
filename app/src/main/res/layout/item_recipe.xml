@@ -2,30 +2,36 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="180dp"
-    android:layout_height="150dp"
-    android:elevation="20dp"
-    android:background="#AAD7D9">
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="5dp"
+    android:background="#AAD7D9"
+    android:elevation="20dp">
 
     <ImageView
         android:id="@+id/imgRecipe"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="6dp"
         android:contentDescription="Recipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@android:drawable/screen_background_light" />
 
     <TextView
         android:id="@+id/tvRecipeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:text="Recipe Title"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,13 +41,7 @@
         android:id="@+id/checkboxIsFavourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/icon_heart_unchecked"
-        android:checked="false"
-        android:clickable="false"
-        android:foregroundTint="#FACCCC"
-        android:textColorHighlight="#ECAE10"
-        android:textColorLink="#ECAE10"
-        android:textSize="0sp"
+        android:text="@null"
         app:layout_constraintEnd_toEndOf="@+id/imgRecipe"
         app:layout_constraintTop_toTopOf="@+id/imgRecipe" />
 
