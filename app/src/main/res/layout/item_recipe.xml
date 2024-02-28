@@ -31,15 +31,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgRecipe" />
 
-    <ImageButton
-        android:id="@+id/imgFavourite"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="2dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="Add to favourites"
+    <CheckBox
+        android:id="@+id/checkboxIsFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/icon_heart_unchecked"
+        android:checked="false"
+        android:clickable="false"
+        android:foregroundTint="#FACCCC"
+        android:textColorHighlight="#ECAE10"
+        android:textColorLink="#ECAE10"
+        android:textSize="0sp"
         app:layout_constraintEnd_toEndOf="@+id/imgRecipe"
-        app:layout_constraintTop_toTopOf="@+id/imgRecipe"
-        app:srcCompat="@drawable/icon_heart_unchecked" />
+        app:layout_constraintTop_toTopOf="@+id/imgRecipe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
