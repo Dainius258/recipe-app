@@ -1,6 +1,6 @@
 package com.kvk.recipeapp.data
 
 public data class Recipe(
-    val title: String,
-    val isFavourite: Boolean
+    val recipe_id: Int,
+    val recipe_name: String
 )

@@ -1,9 +1,7 @@
 package com.kvk.recipeapp
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.databinding.ItemRecipeBinding
@@ -19,8 +17,7 @@ class RecipeAdapter(var recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdap
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.binding.apply {
-            tvRecipeTitle.text = recipes[position].title
-            checkboxIsFavourite.isChecked = recipes[position].isFavourite
+            tvRecipeTitle.text = recipes[position].recipe_name
         }
     }
 
