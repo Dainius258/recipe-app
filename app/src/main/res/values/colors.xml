@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="mint">#92C7CF</color>
+    <color name="mintLight">#AAD7D9</color>
+    <color name="greyDark">#E5E1DA</color>
+    <color name="pastel">#FBF9F1</color>
 </resources>
