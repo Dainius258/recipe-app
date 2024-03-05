@@ -34,6 +34,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_favourite_recipe_account_bottom" />
+        tools:layout="@layout/fragment_favourite_recipe_account_bottom" >
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
