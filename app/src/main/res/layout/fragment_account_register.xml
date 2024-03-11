@@ -12,12 +12,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/tvAlreadyHaveAcc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:text="Don't have an account?"
+                android:text="Already have an account?"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
                 app:strokeWidth="0.8dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvCredStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -60,7 +61,7 @@
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/tilUsernameRegister"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCredStatus" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilUsernameRegister"
@@ -132,7 +133,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvPassswordLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tietPasswordRegister"
+                    android:id="@+id/tietRegisterPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/mintLight"
@@ -161,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvRepeatPassswordLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tietRepeatPasswordRegister"
+                    android:id="@+id/tietRegisterRepeatPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/mintLight"

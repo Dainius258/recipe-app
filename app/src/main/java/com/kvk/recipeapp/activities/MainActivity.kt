@@ -1,9 +1,9 @@
 package com.kvk.recipeapp.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kvk.recipeapp.bottomBarFragments.HomeRecipeAccountBottomFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.kvk.recipeapp.R
+import com.kvk.recipeapp.bottomBarFragments.FavouriteRecipeAccountBottomFragment
 import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
 
@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
 
-        val HomeRecAccFragment = HomeRecipeAccountBottomFragment();
+        val FavRecAccFragment = FavouriteRecipeAccountBottomFragment();
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragmentBottomBar, HomeRecAccFragment)
+            replace(R.id.flFragmentBottomBar, FavRecAccFragment)
             commit()
         }
 

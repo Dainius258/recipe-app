@@ -5,9 +5,7 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.kvk.recipeapp.R
-import com.kvk.recipeapp.contentFragments.AccountLoginFragment
-import com.kvk.recipeapp.contentFragments.FavouriteRecipeListFragment
-import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
+import com.kvk.recipeapp.fragmentSwitches.FragmentSwitcher
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -19,25 +17,14 @@ class FavouriteRecipeAccountBottomFragment : Fragment(R.layout.fragment_favourit
         super.onViewCreated(view, savedInstanceState)
         val favouriteButton: ImageButton = view.findViewById(R.id.imageButtonFavourites)
         val  accountButton: ImageButton = view.findViewById(R.id.imageButtonAccount)
+        val fragmentSwitcher = FragmentSwitcher()
 
         favouriteButton.setOnClickListener{
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-
-            fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
-            fragmentTransaction.replace(R.id.flFragmentContents, FavouriteRecipeListFragment())
-            fragmentTransaction.replace(R.id.flFragmentTopBar, FilterSearchTopFragment())
-
-            fragmentTransaction.commit()
+            fragmentSwitcher.switchToFavourites(parentFragmentManager, requireContext())
         }
 
         accountButton.setOnClickListener{
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.addToBackStack(null)
-
-            fragmentTransaction.replace(R.id.flFragmentContents, AccountLoginFragment())
-            fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
-            fragmentTransaction.commit()
+            fragmentSwitcher.switchToAccount(parentFragmentManager, requireContext())
         }
     }
 }

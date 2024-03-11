@@ -42,9 +42,8 @@ class MainRecipeListFragment : Fragment() {
                 return@launch
             }
             if(response.isSuccessful && response.body() != null) {
-                Log.e("Network", "Received recipes")
                 withContext(Dispatchers.Main) {
-                    Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
+                    //Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
                     val recipeList = response.body()!!
                     val adapter = RecipeAdapter(recipeList)
                     recyclerView.adapter = adapter
