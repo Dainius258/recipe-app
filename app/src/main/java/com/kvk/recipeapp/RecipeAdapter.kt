@@ -19,7 +19,7 @@ class RecipeAdapter(var recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdap
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.binding.apply {
-            tvRecipeTitle.text = recipes[position].recipe_name
+            tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
             if(base64ImageData != null) {
                 val imageData = Base64.decode(base64ImageData, Base64.DEFAULT)

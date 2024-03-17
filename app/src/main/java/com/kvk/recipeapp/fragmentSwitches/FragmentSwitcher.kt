@@ -7,6 +7,7 @@ import com.kvk.recipeapp.bottomBarFragments.FavouriteRecipeAccountBottomFragment
 import com.kvk.recipeapp.bottomBarFragments.HomeRecipeAccountBottomFragment
 import com.kvk.recipeapp.contentFragments.AccountLoggedInFragment
 import com.kvk.recipeapp.contentFragments.AccountLoginFragment
+import com.kvk.recipeapp.contentFragments.AddRecipeFragment
 import com.kvk.recipeapp.contentFragments.FavouriteRecipeListFragment
 import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
@@ -22,8 +23,15 @@ class FragmentSwitcher {
         fragmentTransaction.replace(R.id.flFragmentBottomBar, FavouriteRecipeAccountBottomFragment())
         fragmentTransaction.replace(R.id.flFragmentContents, MainRecipeListFragment())
         fragmentTransaction.replace(R.id.flFragmentTopBar, FilterSearchTopFragment())
-
         fragmentTransaction.commit()
+    }
+
+    fun switchToAddRecipes(fragmentManager: FragmentManager, context: Context) {
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.replace(R.id.flFragmentContents, AddRecipeFragment())
+            fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
+            fragmentTransaction.commit()
     }
 
     fun switchToAccount(fragmentManager: FragmentManager, context: Context) {

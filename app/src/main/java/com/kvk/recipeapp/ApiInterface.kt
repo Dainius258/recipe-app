@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiInterface {
-    @GET("/recipes/getrecipes")
+    @GET("/api/getrecipes")
     suspend fun getAllRecipes():Response<Recipes>
     @POST("/api/register")
     @FormUrlEncoded

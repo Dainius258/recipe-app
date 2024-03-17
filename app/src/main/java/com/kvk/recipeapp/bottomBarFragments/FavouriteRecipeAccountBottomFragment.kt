@@ -16,8 +16,13 @@ class FavouriteRecipeAccountBottomFragment : Fragment(R.layout.fragment_favourit
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val favouriteButton: ImageButton = view.findViewById(R.id.imageButtonFavourites)
-        val  accountButton: ImageButton = view.findViewById(R.id.imageButtonAccount)
+        val accountButton: ImageButton = view.findViewById(R.id.imageButtonAccount)
+        val addRecipeButton: ImageButton = view.findViewById(R.id.imageButtonAddRecipe)
         val fragmentSwitcher = FragmentSwitcher()
+
+        addRecipeButton.setOnClickListener{
+            fragmentSwitcher.switchToAddRecipes(parentFragmentManager, requireContext())
+        }
 
         favouriteButton.setOnClickListener{
             fragmentSwitcher.switchToFavourites(parentFragmentManager, requireContext())

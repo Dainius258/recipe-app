@@ -1,13 +1,15 @@
 package com.kvk.recipeapp.data
 import java.sql.Timestamp
 public data class Recipe(
-    val recipe_id: Int,
-    val recipe_name: String,
+    val id: Int,
     val user_id: Int,
+    val title: String,
     val image: String,
     val ingredients: Array<String>,
-    val total_time: String,
+    val guide: String,
+    val total_time_minutes: Int,
     val servings: Int,
+    val rating: Float,
     val created_at: Timestamp,
     val updated_at: Timestamp
 )
