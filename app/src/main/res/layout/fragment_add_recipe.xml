@@ -6,161 +6,247 @@
     android:layout_height="match_parent"
     tools:context=".contentFragments.AddRecipeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvRecipeTitleLabelInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title of your recipe"
-            android:textSize="26sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tielRecipeTitleInput"
-            android:layout_width="409dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeTitleLabelInput">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietRecipeTitleInput"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvRecipeTitleLabelInput"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="Title of your recipe"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvRecipeHoursLabelInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How long it takes"
-            android:textSize="26sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tielRecipeTitleInput" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tielHoursInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:hintAnimationEnabled="false"
-            app:layout_constraintEnd_toStartOf="@+id/tielMinutesInput"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHoursLabelInput">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietHoursInput"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tielRecipeTitleInput"
+                android:layout_width="409dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecipeTitleLabelInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietRecipeTitleInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRecipeHoursLabelInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How long it takes"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tielRecipeTitleInput" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tielHoursInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintAnimationEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/tielMinutesInput"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecipeHoursLabelInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietHoursInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:inputType="number"
+                    android:hint="Hours" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tielMinutesInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintAnimationEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tielHoursInput"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecipeHoursLabelInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietMinutesInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:inputType="number"
+                    android:hint="Minutes" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRecipeServingsLabelInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Servings"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tielMinutesInput" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tielServingsInput"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecipeServingsLabelInput">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietServingsInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:inputType="number"
+                    android:textSize="25sp"
+                    android:textAlignment="center"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:inputType="number"
-                android:hint="Hours" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="?android:attr/listDivider"
+                android:backgroundTint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tielServingsInput" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tielMinutesInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:hintAnimationEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tielHoursInput"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHoursLabelInput">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietMinutesInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:id="@+id/btnPlusIngredient"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:inputType="number"
-                android:hint="Minutes" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tvRecipeServingsLabelInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Servings"
-            android:textSize="26sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tielMinutesInput" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tielServingsInput"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeServingsLabelInput">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tietServingsInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:inputType="number"
-                android:textSize="25sp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
                 tools:ignore="SpeakableTextPresentCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="?android:attr/listDivider"
-            android:backgroundTint="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tielServingsInput" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietIngredientInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Ingredient..."
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/rvIngredients"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnPlusIngredient"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-        <ImageButton
-            android:id="@+id/btnPlusIngredient"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/plus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvIngredients"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlusIngredient" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvIngredients"
-            android:layout_width="409dp"
-            android:layout_height="374dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPlusIngredient" />
+            <EditText
+                android:id="@+id/editTextTextMultiLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="20"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:hint="Preperations, etc"
+                android:minLines="10"
+                android:scrollbars="vertical"
+                android:scrollbarStyle="insideInset"
+                android:scrollbarSize="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvIngredients" />
 
+            <ImageButton
+                android:id="@+id/btnPlusImage"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietIngredientInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Ingredient..."
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/rvIngredients"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnPlusIngredient"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
+            <TextView
+                android:id="@+id/tvAddImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Add image"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/btnPlusImage"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
 
+            <ImageButton
+                android:id="@+id/btnPlusTag"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlusImage"
+                tools:ignore="SpeakableTextPresentCheck" />
 
+            <TextView
+                android:id="@+id/tvAddTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Add tags"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/btnPlusTag"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlusImage" />
+
+            <Button
+                android:id="@+id/btnPostRecipe"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/mintLight"
+                android:text="POST RECIPE"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlusTag"
+                app:strokeColor="#000000"
+                app:strokeWidth="0.8dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+
+
+
 </LinearLayout>
