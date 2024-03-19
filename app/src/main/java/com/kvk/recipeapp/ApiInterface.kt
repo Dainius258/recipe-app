@@ -1,8 +1,8 @@
 package com.kvk.recipeapp
 
+import com.kvk.recipeapp.data.GeneralResponse
 import com.kvk.recipeapp.data.LoginResponse
 import com.kvk.recipeapp.data.Recipes
-import com.kvk.recipeapp.data.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -18,11 +18,22 @@ interface ApiInterface {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("email") email: String
-    ): Response<RegisterResponse>
+    ): Response<GeneralResponse>
     @POST("/api/login")
     @FormUrlEncoded
     suspend fun loginUser(
         @Field("username") username: String,
         @Field("password") password: String,
     ): Response<LoginResponse>
+    @POST("/api/newrecipe")
+    @FormUrlEncoded
+    suspend fun postRecipe(
+        @Field("user_id") user_id: Int,
+        @Field("title") title: String,
+        @Field("image") image: String,
+        @Field("ingredients") ingredients: Array<String>,
+        @Field("guide") guide: String,
+        @Field("total_time_minutes") total_time_minutes: Int,
+        @Field("servings") servings: Int
+    ): Response<GeneralResponse>
 }

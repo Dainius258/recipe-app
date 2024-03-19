@@ -1,5 +1,5 @@
 package com.kvk.recipeapp.data
 
-data class RegisterResponse(
+data class GeneralResponse(
     val message: String
 )

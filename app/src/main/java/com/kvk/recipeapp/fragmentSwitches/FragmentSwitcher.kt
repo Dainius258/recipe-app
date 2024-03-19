@@ -10,6 +10,7 @@ import com.kvk.recipeapp.contentFragments.AccountLoginFragment
 import com.kvk.recipeapp.contentFragments.AddRecipeFragment
 import com.kvk.recipeapp.contentFragments.FavouriteRecipeListFragment
 import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
+import com.kvk.recipeapp.topBarFragments.AddRecipeTopFragment
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
 import com.kvk.recipeapp.topBarFragments.LoggedInTopFragment
 import com.kvk.recipeapp.topBarFragments.LoginRegisterTopFragment
@@ -31,6 +32,7 @@ class FragmentSwitcher {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.flFragmentContents, AddRecipeFragment())
             fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
+            fragmentTransaction.replace(R.id.flFragmentTopBar, AddRecipeTopFragment())
             fragmentTransaction.commit()
     }
 
