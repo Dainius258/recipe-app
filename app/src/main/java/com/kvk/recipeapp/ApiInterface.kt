@@ -3,6 +3,7 @@ package com.kvk.recipeapp
 import com.kvk.recipeapp.data.GeneralResponse
 import com.kvk.recipeapp.data.LoginResponse
 import com.kvk.recipeapp.data.Recipes
+import com.kvk.recipeapp.data.Tags
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -12,6 +13,8 @@ import retrofit2.http.POST
 interface ApiInterface {
     @GET("/api/getrecipes")
     suspend fun getAllRecipes():Response<Recipes>
+    @GET("/api/gettags")
+    suspend fun getAllTags():Response<Tags>
     @POST("/api/register")
     @FormUrlEncoded
     suspend fun registerUser(
@@ -34,6 +37,7 @@ interface ApiInterface {
         @Field("ingredients") ingredients: Array<String>,
         @Field("guide") guide: String,
         @Field("total_time_minutes") total_time_minutes: Int,
-        @Field("servings") servings: Int
+        @Field("servings") servings: Int,
+        @Field("tag_ids") tag_ids: Set<String>?
     ): Response<GeneralResponse>
 }
