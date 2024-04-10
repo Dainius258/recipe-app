@@ -16,4 +16,10 @@ class PreferenceManager(context: Context) {
     fun getSelectedTagIds(): Set<String>? {
         return sharedPreferences.getStringSet("selectedTagIds", null)
     }
+
+    fun clearSelectedTagIds() {
+        val editor = sharedPreferences.edit()
+        editor.remove("selectedTagIds")
+        editor.apply()
+    }
 }

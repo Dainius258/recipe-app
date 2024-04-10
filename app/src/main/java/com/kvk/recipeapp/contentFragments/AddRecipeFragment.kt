@@ -249,11 +249,11 @@ class AddRecipeFragment : Fragment() {
             }
 
             if (recipeTags != null) {
-                if(recipeTags.isEmpty()) {
-                    Log.d("POST_RECIPE", "ADD ATLEAST ONE TAG")
+                if(recipeTags.size <= 1) {
+                    Log.d("POST_RECIPE", "ADD ATLEAST TWO TAGS")
                     val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                     builder
-                        .setMessage("Add at least one tag")
+                        .setMessage("Add at least two tags")
                         .setTitle("Missing tags")
                         .setPositiveButton("Close") { dialog, _ ->
                             dialog.dismiss()
@@ -326,6 +326,7 @@ class AddRecipeFragment : Fragment() {
                             val dialog: AlertDialog = builder.create()
                             dialog.show()
                         }
+                        preferenceManager.clearSelectedTagIds()
                         Log.d("Network", "Response successful")
                     }
                 } else {
