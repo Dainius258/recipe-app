@@ -1,5 +1,6 @@
 package com.kvk.recipeapp.fragmentSwitches
 
+import android.app.AlertDialog
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.kvk.recipeapp.R
@@ -28,12 +29,33 @@ class FragmentSwitcher {
     }
 
     fun switchToAddRecipes(fragmentManager: FragmentManager, context: Context) {
+        val tokenManager = TokenManager(context)
+        val token = tokenManager.getToken()
+        if(token != null && tokenManager.isTokenValid(token)) {
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.flFragmentContents, AddRecipeFragment())
             fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
             fragmentTransaction.replace(R.id.flFragmentTopBar, AddRecipeTopFragment())
             fragmentTransaction.commit()
+        } else {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder
+                .setMessage("Please log in")
+                .setTitle("Can't access as a guest")
+                .setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack(null)
+
+            fragmentTransaction.replace(R.id.flFragmentContents, AccountLoginFragment())
+            fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
+            fragmentTransaction.replace(R.id.flFragmentTopBar, LoginRegisterTopFragment())
+            fragmentTransaction.commit()
+        }
     }
 
     fun switchToAccount(fragmentManager: FragmentManager, context: Context) {
@@ -69,6 +91,15 @@ class FragmentSwitcher {
 
             fragmentTransaction.commit()
         } else {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder
+                .setMessage("Please log in")
+                .setTitle("Can't access as a guest")
+                .setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
 
