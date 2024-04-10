@@ -31,6 +31,7 @@ class MainRecipeListFragment : Fragment() {
         val layoutManager = GridLayoutManager(context, 1)
         recyclerView.layoutManager = layoutManager
 
+
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 RetroFitInstance.api.getAllRecipes()

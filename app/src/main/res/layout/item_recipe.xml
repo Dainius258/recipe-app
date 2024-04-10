@@ -39,10 +39,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewIsFavourite"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:elevation="10dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/mintLight"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"

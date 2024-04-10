@@ -10,12 +10,48 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.databinding.ItemRecipeBinding
+import com.kvk.recipeapp.utils.ErrorResponseParser
+import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 
-class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     inner class RecipeViewHolder(val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {}
     private val tokenManager = TokenManager(context)
-    val token = tokenManager.getToken()
+    private val token = tokenManager.getToken()
+    private var favoriteRecipeIds: HashSet<Int> = HashSet()
+
+    init {
+        if (token != null && tokenManager.isTokenValid(token)) {
+            val userId = tokenManager.getUserId()?.toInt()
+            if (userId != null) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    try {
+                        val response = RetroFitInstance.api.getFavourites(userId)
+                        if (response.isSuccessful && response.body() != null) {
+                            val favoriteList = response.body()!!
+                            favoriteRecipeIds.addAll(favoriteList.map { it.recipe_id })
+                            Log.d("RECIPEIDS", "$favoriteRecipeIds")
+                            withContext(Dispatchers.Main) {
+                                notifyDataSetChanged() // Notify adapter once data is fetched
+                            }
+                        } else {
+                            Log.e("Network", "Failed to fetch favorite recipe IDs")
+                        }
+                    } catch (e: IOException) {
+                        Log.e("Network", "IOException: ${e.message}")
+                    } catch (e: HttpException) {
+                        Log.e("Network", "HttpException: ${e.message}")
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,6 +64,7 @@ class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.
             var checkboxCard = cardviewIsFavourite
             var checkbox = checkboxIsFavourite
             var recipeId = recipes[position].id
+            val isFavorite = favoriteRecipeIds.contains(recipeId)
             tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
             if(base64ImageData != null) {
@@ -40,16 +77,87 @@ class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.
                 } else {
                     checkboxCard.visibility = View.GONE
                 }
-                checkbox.setOnCheckedChangeListener{ _, isChecked ->
-                    Log.d("CHECKBOX", "Recipe ID($recipeId) checked status: $isChecked")
+
+                checkboxIsFavourite.isChecked = isFavorite
+                checkboxIsFavourite.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        addFavorite(recipeId)
+                    } else {
+                        removeFavorite(recipeId)
+                    }
                 }
             } else {
                 imgRecipe.setImageDrawable(null)
             }
         }
     }
-
     override fun getItemCount(): Int {
         return recipes.size
+    }
+
+    private fun addFavorite(recipeId: Int) {
+        // Add recipe ID to favorites
+        var userId = tokenManager.getUserId()?.toInt()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = try {
+                if (userId != null) {
+                    RetroFitInstance.api.postNewFavourite(userId, recipeId)
+                } else {
+                    return@launch
+                }
+            } catch (e: IOException) {
+                Log.e("Network", "IOException: ${e.message}")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e("Network", "HttpException: ${e.message}")
+                return@launch
+            }
+            if (response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
+                    Log.d("Network", "Response successful")
+                }
+            } else {
+                val errorMessage = ErrorResponseParser.parseErrorBody(response)
+                if ((errorMessage != null)) {
+
+                    Log.d("Network", "Response unsuccessful $errorMessage")
+                } else {
+                    Log.e("Network", "Response unsuccessful")
+                }
+            }
+        }
+    }
+
+    private fun removeFavorite(recipeId: Int) {
+        var userId = tokenManager.getUserId()?.toInt()
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = try {
+                if (userId != null) {
+                    RetroFitInstance.api.deleteFavourite(userId, recipeId)
+                } else {
+                    return@launch
+                }
+            } catch (e: IOException) {
+                Log.e("Network", "IOException: ${e.message}")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e("Network", "HttpException: ${e.message}")
+                return@launch
+            }
+            if (response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
+                    Log.d("Network", "Response successful")
+                }
+            } else {
+                val errorMessage = ErrorResponseParser.parseErrorBody(response)
+                if ((errorMessage != null)) {
+
+                    Log.d("Network", "Response unsuccessful $errorMessage")
+                } else {
+                    Log.e("Network", "Response unsuccessful")
+                }
+            }
+        }
+
     }
 }
