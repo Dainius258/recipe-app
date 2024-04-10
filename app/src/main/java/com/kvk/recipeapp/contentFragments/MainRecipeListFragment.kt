@@ -45,7 +45,7 @@ class MainRecipeListFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     //Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
                     val recipeList = response.body()!!
-                    val adapter = RecipeAdapter(recipeList)
+                    val adapter = RecipeAdapter(recipeList, requireContext())
                     recyclerView.adapter = adapter
                 }
             } else {

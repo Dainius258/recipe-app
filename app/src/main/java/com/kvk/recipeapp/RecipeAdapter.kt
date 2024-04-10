@@ -1,15 +1,20 @@
 package com.kvk.recipeapp
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.databinding.ItemRecipeBinding
+import com.kvk.recipeapp.utils.TokenManager
 
-class RecipeAdapter(var recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     inner class RecipeViewHolder(val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {}
+    private val tokenManager = TokenManager(context)
+    val token = tokenManager.getToken()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,6 +24,7 @@ class RecipeAdapter(var recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdap
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.binding.apply {
+            var checkbox = cardviewIsFavourite
             tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
             if(base64ImageData != null) {
@@ -26,6 +32,11 @@ class RecipeAdapter(var recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdap
                 //Log.d("RECIPE_LIST", imageData.toString())
                 val bitmap = BitmapFactory.decodeByteArray(imageData, 0,imageData.size)
                 imgRecipe.setImageBitmap(bitmap)
+                if(token != null && tokenManager.isTokenValid(token)) {
+                   checkbox.visibility = View.VISIBLE
+                } else {
+                    checkbox.visibility = View.GONE
+                }
             } else {
                 imgRecipe.setImageDrawable(null)
             }
