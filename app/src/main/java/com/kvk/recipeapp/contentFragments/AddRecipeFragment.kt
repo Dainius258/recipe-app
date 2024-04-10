@@ -209,44 +209,86 @@ class AddRecipeFragment : Fragment() {
         }
 
         btnPostRecipe.setOnClickListener {
-            if(!::croppedImageUri.isInitialized) {
-                return@setOnClickListener
-            }
            val recipeTitle = view.findViewById<TextInputEditText>(R.id.tietRecipeTitleInput).text.toString()
-            val recipeImage = croppedImageUri
             val recipeIngredients = ingredientsList.toTypedArray()
             val recipeGuide = view.findViewById<EditText>(R.id.tietRecipeGuide).text.toString()
-            val recipeMinutesText = view.findViewById<TextInputEditText>(R.id.tietMinutesInput).text.toString()
-            val recipeHoursText = view.findViewById<TextInputEditText>(R.id.tietHoursInput).text.toString()
+            var recipeMinutesText = view.findViewById<TextInputEditText>(R.id.tietMinutesInput).text.toString()
+            var recipeHoursText = view.findViewById<TextInputEditText>(R.id.tietHoursInput).text.toString()
             val recipeServingsText = view.findViewById<TextInputEditText>(R.id.tietServingsInput).text.toString()
             val recipeTags = preferenceManager.getSelectedTagIds()
 
+            if (recipeTitle.isEmpty() || recipeGuide.isEmpty() ||
+                (recipeMinutesText.isEmpty() && recipeHoursText.isEmpty()) ||
+                recipeServingsText.isEmpty()
+            ) {
+                Log.d("POST_RECIPE", "FILL ALL THE FIELDS")
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder
+                    .setMessage("Fill all the fields")
+                    .setTitle("Missing fields")
+                    .setPositiveButton("Close") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+                return@setOnClickListener // Exits
+            }
+
             if(recipeIngredients.size <= 1) {
                 Log.d("POST_RECIPE", "ADD ATLEAST TWO INGREDIENTS")
-                // TODO add some message or dialog
+                val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+                builder
+                    .setMessage("Add at least two ingredients")
+                    .setTitle("Missing ingredients")
+                    .setPositiveButton("Close") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
                 return@setOnClickListener
             }
 
             if (recipeTags != null) {
                 if(recipeTags.isEmpty()) {
                     Log.d("POST_RECIPE", "ADD ATLEAST ONE TAG")
-                    // TODO add some message or dialog
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                    builder
+                        .setMessage("Add at least one tag")
+                        .setTitle("Missing tags")
+                        .setPositiveButton("Close") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                     return@setOnClickListener
                 }
             }
 
-            if (recipeTitle.isEmpty() || recipeGuide.isEmpty() ||
-                recipeMinutesText.isEmpty() || recipeHoursText.isEmpty() ||
-                recipeServingsText.isEmpty() || recipeIngredients.isEmpty() ||
-                recipeImage.isEmpty()
-            ) {
-                Log.d("POST_RECIPE", "FILL ALL THE FIELDS")
-                // TODO add some message or dialog
-                return@setOnClickListener // Exits
+            if(!::croppedImageUri.isInitialized) {
+                Log.d("POST_RECIPE", "Cropped image uri is not initialized")
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder
+                    .setMessage("Select an image of your dish")
+                    .setTitle("No image selected")
+                    .setPositiveButton("Close") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+                return@setOnClickListener
             }
+            val recipeImage = croppedImageUri
+
             var recipeMinutes: Int
             val recipeHours: Int
             val recipeServings: Int
+
+            if(recipeMinutesText.isEmpty()) {
+                recipeMinutesText = "0"
+            }
+            if(recipeHoursText.isEmpty()) {
+                recipeHoursText = "0"
+            }
 
             try {
                 recipeMinutes = recipeMinutesText.toInt()
@@ -262,6 +304,7 @@ class AddRecipeFragment : Fragment() {
 
             GlobalScope.launch(Dispatchers.IO) {
                 val response = try {
+                    // TODO add real user id from the token
                     RetroFitInstance.api.postRecipe(23, recipeTitle, recipeImage,recipeIngredients,recipeGuide,recipeMinutes,recipeServings, recipeTags)
                 } catch (e: IOException) {
                     Log.e("Network", "IOException: ${e.message}")
@@ -273,7 +316,15 @@ class AddRecipeFragment : Fragment() {
                 if(response.isSuccessful) {
                     withContext(Dispatchers.Main) {
                         requireActivity().runOnUiThread{
-                           // TODO add some message or dialog
+                            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                            builder
+                                .setMessage("Recipe successfully added")
+                                .setTitle("It sounds tasty!")
+                                .setPositiveButton("Close") { dialog, _ ->
+                                    dialog.dismiss()
+                                }
+                            val dialog: AlertDialog = builder.create()
+                            dialog.show()
                         }
                         Log.d("Network", "Response successful")
                     }
