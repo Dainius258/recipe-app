@@ -34,6 +34,19 @@ class TokenManager(context: Context) {
         editor.remove("jwtToken")
         editor.apply()
     }
+
+    fun getUserId(): String? {
+        val token = getToken()
+        if (token != null && isTokenValid(token)) {
+            try {
+                val jwt = JWT(token)
+                return jwt.getClaim("id").asString()
+            } catch (e: Exception) {
+                Log.e("TokenManager", "Error extracting user id from token", e)
+            }
+        }
+        return null
+    }
     fun isTokenValid(token: String): Boolean {
         try {
             val jwt = JWT(token)

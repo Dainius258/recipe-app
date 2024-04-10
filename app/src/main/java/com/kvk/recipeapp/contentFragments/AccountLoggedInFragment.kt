@@ -1,5 +1,6 @@
 package com.kvk.recipeapp.contentFragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,6 +14,7 @@ class AccountLoggedInFragment : Fragment(R.layout.fragment_account_logged_in) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val logoutButton: Button = view.findViewById(R.id.btnLogout)
+        val debugButton: Button = view.findViewById(R.id.btnDebug)
         val fragmentSwitcher = FragmentSwitcher()
 
         val tokenText: TextView = view.findViewById<TextView>(R.id.tvToken)
@@ -23,6 +25,19 @@ class AccountLoggedInFragment : Fragment(R.layout.fragment_account_logged_in) {
         logoutButton.setOnClickListener{
             tokenManager.clearToken()
             fragmentSwitcher.switchToHome(parentFragmentManager)
+        }
+
+        debugButton.setOnClickListener {
+            val userId = tokenManager.getUserId()
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder
+                .setMessage("${userId} your user id")
+                .setTitle("DEBUG")
+                .setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 }

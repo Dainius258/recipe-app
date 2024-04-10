@@ -3,6 +3,7 @@ package com.kvk.recipeapp
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,9 @@ class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.binding.apply {
-            var checkbox = cardviewIsFavourite
+            var checkboxCard = cardviewIsFavourite
+            var checkbox = checkboxIsFavourite
+            var recipeId = recipes[position].id
             tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
             if(base64ImageData != null) {
@@ -33,9 +36,12 @@ class RecipeAdapter(var recipes: List<Recipe>, context: Context) : RecyclerView.
                 val bitmap = BitmapFactory.decodeByteArray(imageData, 0,imageData.size)
                 imgRecipe.setImageBitmap(bitmap)
                 if(token != null && tokenManager.isTokenValid(token)) {
-                   checkbox.visibility = View.VISIBLE
+                   checkboxCard.visibility = View.VISIBLE
                 } else {
-                    checkbox.visibility = View.GONE
+                    checkboxCard.visibility = View.GONE
+                }
+                checkbox.setOnCheckedChangeListener{ _, isChecked ->
+                    Log.d("CHECKBOX", "Recipe ID($recipeId) checked status: $isChecked")
                 }
             } else {
                 imgRecipe.setImageDrawable(null)

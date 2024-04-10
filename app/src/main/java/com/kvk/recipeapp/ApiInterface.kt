@@ -40,4 +40,11 @@ interface ApiInterface {
         @Field("servings") servings: Int,
         @Field("tag_ids") tag_ids: Set<String>?
     ): Response<GeneralResponse>
+
+    @POST("/api/newfavourite")
+    @FormUrlEncoded
+    suspend fun postNewFavourite(
+        @Field("user_id") user_id: Int,
+        @Field("recipe_id") recipe_id: Int
+    ): Response<GeneralResponse>
 }
