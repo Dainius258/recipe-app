@@ -1,10 +1,14 @@
 package com.kvk.recipeapp.contentFragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +36,11 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         val layoutManager = GridLayoutManager(context, 1)
         recyclerViewIngredients.layoutManager = layoutManager
 
+        val recipeImage = rootView.findViewById<ImageView>(R.id.imgvRecipe)
+        val ratingText = rootView.findViewById<TextView>(R.id.tvRating)
+        val cookTime = rootView.findViewById<TextView>(R.id.tvTimeToCook)
+        val servings = rootView.findViewById<TextView>(R.id.tvServings)
+        val guide = rootView.findViewById<TextView>(R.id.tvGuide)
 
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
@@ -45,10 +54,36 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
             }
             if(response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
-                    //Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
                     val recipe = response.body()!!
+
+                    val base64ImageData = recipe.image
+                    val imageData = Base64.decode(base64ImageData, Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeByteArray(imageData, 0,imageData.size)
+                    recipeImage.setImageBitmap(bitmap)
+
                     val ingredients = recipe.ingredients
                     val adapter = IngredientAdapter(ingredients)
+
+                    val totalTimeMinutes = recipe.total_time_minutes
+                    val cookHours = totalTimeMinutes / 60
+                    val cookMinutes = totalTimeMinutes % 60
+
+                    ratingText.text = "${recipe.rating}% Liked this recipe"
+
+                    if(cookHours < 1) {
+                        cookTime.text = "Ready in ${cookMinutes} minutes"
+                    } else {
+                        cookTime.text = "Ready in ${cookHours} hours ${cookMinutes} minutes"
+                    }
+
+                    if(recipe.servings == 1) {
+                        servings.text = "${recipe.servings} serving"
+                    } else {
+                        servings.text = "${recipe.servings} servings"
+                    }
+
+                    guide.text = recipe.guide
+
                     recyclerViewIngredients.adapter = adapter
                 }
             } else {

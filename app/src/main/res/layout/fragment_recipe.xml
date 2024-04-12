@@ -6,15 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".contentFragments.RecipeFragment">
 
-    <ImageView
-        android:id="@+id/imgvRecipe"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvRecipeImage"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:src="@drawable/ic_launcher_background"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:cardBackgroundColor="@color/mintLight"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgvRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.card.MaterialCardView>
+
 
     <ImageView
         android:id="@+id/imgvThumbsUp"
@@ -24,7 +36,7 @@
         android:layout_marginTop="6dp"
         android:src="@drawable/icon_like"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgvRecipe" />
+        app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
 
     <ImageView
         android:id="@+id/imgvClock"
@@ -55,7 +67,7 @@
         android:text="50% Liked this recipe"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imgvThumbsUp"
-        app:layout_constraintTop_toBottomOf="@+id/imgvRecipe" />
+        app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
 
     <TextView
         android:id="@+id/tvTimeToCook"
