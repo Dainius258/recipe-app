@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardComment"
     android:layout_width="match_parent"
-    android:layout_height="76dp"
+    android:layout_height="58dp"
     android:layout_marginTop="4dp"
     app:cardBackgroundColor="@color/mint"
     app:cardCornerRadius="0dp"
@@ -22,6 +22,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginTop="4dp"
             android:text="Name"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,18 +32,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:text="How to cook this lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget mi et metus vestibulum consectetur. Pellentesque non lectus neque. Integer magna augue, mattis sed vehicula eget, dignissim non tellus. Maecenas pharetra vestibulum nisl. Vivamus efficitur pretium finibus. Vivamus non ipsum dolor. "
             android:textColor="#000000"
-            android:textSize="12sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvCommentOwner"
             app:layout_constraintTop_toBottomOf="@+id/tvCommentOwner" />
 
         <ImageButton
             android:id="@+id/btnExpand"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginRight="6dp"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
@@ -52,6 +53,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/down_arrow"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tvExpand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expand"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btnExpand"
+            app:layout_constraintEnd_toStartOf="@+id/btnExpand"
+            app:layout_constraintTop_toTopOf="@+id/btnExpand" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

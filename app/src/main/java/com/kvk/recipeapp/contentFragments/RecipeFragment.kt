@@ -58,11 +58,14 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         val servings = rootView.findViewById<TextView>(R.id.tvServings)
         val guide = rootView.findViewById<TextView>(R.id.tvGuide)
         val iMadeThisButton = rootView.findViewById<Button>(R.id.btnRateRecipe)
+        val makeCommentButton = rootView.findViewById<Button>(R.id.btnMakeComment)
 
         if(token != null && tokenManager.isTokenValid(token)) {
             iMadeThisButton.visibility = View.VISIBLE
+            makeCommentButton.visibility = View.VISIBLE
         } else {
             iMadeThisButton.visibility = View.GONE
+            makeCommentButton.visibility = View.GONE
         }
 
         GlobalScope.launch(Dispatchers.IO)  {
@@ -131,8 +134,6 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                             Log.d("Network", "No comments")
                         }
                     }
-
-
                     scrollView.visibility = View.VISIBLE
                     loadingBar.visibility = View.GONE
                 }

@@ -20,13 +20,13 @@ import com.kvk.recipeapp.topBarFragments.RecipeTopFragment
 import com.kvk.recipeapp.utils.TokenManager
 
 class FragmentSwitcher {
-    fun switchToRecipe(fragmentManager: FragmentManager, recipeId:Int) {
+    fun switchToRecipe(fragmentManager: FragmentManager, recipeId:Int, recipeTitle: String) {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
         fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
         fragmentTransaction.replace(R.id.flFragmentContents, RecipeFragment(recipeId))
-        fragmentTransaction.replace(R.id.flFragmentTopBar, RecipeTopFragment())
+        fragmentTransaction.replace(R.id.flFragmentTopBar, RecipeTopFragment(recipeTitle))
         fragmentTransaction.commit()
     }
     fun switchToHome(fragmentManager: FragmentManager) {

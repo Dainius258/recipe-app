@@ -10,13 +10,14 @@
         android:id="@+id/loadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_centerInParent="true" />
 
     <ScrollView
         android:id="@+id/scrollViewRecipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@+id/loadingProgressBar">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -148,16 +149,34 @@
                 app:strokeColor="#000000"
                 app:strokeWidth="0.8dp" />
 
+            <Button
+                android:id="@+id/btnMakeComment"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:backgroundTint="@color/mintLight"
+                android:text="WRITE COMMENT"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/rvComments"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRateRecipe"
+                app:strokeColor="#000000"
+                app:strokeWidth="0.8dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvComments"
                 android:layout_width="match_parent"
-                android:layout_height="156dp"
+                android:layout_height="356dp"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginRight="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRateRecipe" />
+                app:layout_constraintTop_toBottomOf="@+id/btnMakeComment" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </RelativeLayout>

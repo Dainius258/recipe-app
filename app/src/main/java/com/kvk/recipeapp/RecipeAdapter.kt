@@ -67,6 +67,7 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
             var checkboxCard = cardviewIsFavourite
             //var checkbox = checkboxIsFavourite
             var recipeId = recipes[position].id
+            val recipeTitle = recipes[position].title
             val isFavorite = favoriteRecipeIds.contains(recipeId)
             tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
@@ -85,7 +86,7 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
 
                 imageButton.setOnClickListener {
                     val fragmentSwitcher = FragmentSwitcher()
-                    fragmentSwitcher.switchToRecipe(fragmentManager, recipeId)
+                    fragmentSwitcher.switchToRecipe(fragmentManager, recipeId, recipeTitle)
                 }
 
                 checkboxIsFavourite.isChecked = isFavorite
