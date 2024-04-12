@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class MainRecipeListFragment : Fragment() {
 
         val layoutManager = GridLayoutManager(context, 1)
         recyclerView.layoutManager = layoutManager
+        val loadingBar = rootView.findViewById<ProgressBar>(R.id.loadingProgressBar)
 
 
         GlobalScope.launch(Dispatchers.IO)  {
@@ -49,6 +51,9 @@ class MainRecipeListFragment : Fragment() {
                     val adapter = RecipeAdapter(recipeList, requireContext())
                     adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter
+
+                    recyclerView.visibility = View.VISIBLE
+                    loadingBar.visibility= View.GONE
                 }
             } else {
                 Log.e("Network", "Response not successful")
