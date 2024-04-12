@@ -54,6 +54,14 @@ interface ApiInterface {
         @Field("tag_ids") tag_ids: Set<String>?
     ): Response<GeneralResponse>
 
+    @POST("/api/newcomment")
+    @FormUrlEncoded
+    suspend fun postComment(
+        @Field("recipe_id") recipe_id: Int,
+        @Field("user_id") user_id: Int,
+        @Field("comment_text") comment_text: String
+    ): Response<GeneralResponse>
+
     @POST("/api/newfavourite")
     @FormUrlEncoded
     suspend fun postNewFavourite(

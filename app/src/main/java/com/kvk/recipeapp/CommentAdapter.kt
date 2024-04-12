@@ -49,6 +49,7 @@ class CommentAdapter(private var comments: List<Comment>) : RecyclerView.Adapter
         }
 
         fun bind(comment: Comment) {
+            // TODO Make comment editable
             if(comment.comment_text.length < 44) {
                 expandButton.visibility = View.GONE
                 expandText.visibility = View.GONE

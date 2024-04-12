@@ -1,5 +1,6 @@
 package com.kvk.recipeapp.contentFragments
 
+import android.app.AlertDialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,8 +111,28 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                     }
 
                     guide.text = recipe.guide
-
                     recyclerViewIngredients.adapter = ingredientAdapter
+
+                    makeCommentButton.setOnClickListener {
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                        val dialogLayout = LayoutInflater.from(context).inflate(R.layout.dialog_write_comment, null)
+                        builder.setView(dialogLayout)
+                        val dialog: AlertDialog = builder.create()
+                        dialogLayout.findViewById<Button>(R.id.btnCancelComment).setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        dialogLayout.findViewById<Button>(R.id.btnSubmitComment).setOnClickListener {
+                            val comment = dialogLayout.findViewById<AppCompatEditText>(R.id.etmlComment).text.toString()
+                            Log.d("COMMENT", comment)
+                            val userId = tokenManager.getUserId()?.toInt()
+                            if (userId != null) {
+                                postComment(recipeId, userId, comment)
+                            }
+                            dialog.dismiss()
+                            showCommentPostedDialog()
+                        }
+                        dialog.show()
+                    }
 
                     // Very bad idea but im out of time
                     GlobalScope.launch(Dispatchers.IO)  {
@@ -126,7 +148,6 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                         if(response.isSuccessful && response.body() != null) {
                             withContext(Dispatchers.Main) {
                                 val comments = response.body()!!
-                                //Log.d("COMMENTS", comments[1].username)
                                 val commentAdapter = CommentAdapter(comments)
                                 recyclerViewComments.adapter = commentAdapter
                             }
@@ -142,5 +163,37 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
             }
         }
         return rootView
+    }
+
+    fun postComment(recipeId: Int, userId: Int, comment: String, ) {
+        GlobalScope.launch(Dispatchers.IO)  {
+            val response = try {
+                RetroFitInstance.api.postComment(recipeId, userId, comment)
+            } catch (e: IOException) {
+                Log.e("Network", "IOException: ${e.message}")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e("Network", "HttpException: ${e.message}")
+                return@launch
+            }
+            if(response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
+                    //val message = response.body()!!
+                    // TODO Add a check if the comment is too short
+                }
+            } else {
+                Log.d("Network", "Response not successful")
+            }
+        }
+    }
+
+    fun showCommentPostedDialog() {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Comment Posted")
+        builder.setMessage("Your comment has been successfully posted.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }
