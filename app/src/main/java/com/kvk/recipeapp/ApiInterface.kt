@@ -3,6 +3,7 @@ package com.kvk.recipeapp
 import com.kvk.recipeapp.data.Favourites
 import com.kvk.recipeapp.data.GeneralResponse
 import com.kvk.recipeapp.data.LoginResponse
+import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.data.Recipes
 import com.kvk.recipeapp.data.Tags
 import retrofit2.Response
@@ -10,10 +11,13 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiInterface {
     @GET("/api/getrecipes")
     suspend fun getAllRecipes():Response<Recipes>
+    @GET("/api/recipe/{id}")
+    suspend fun getRecipeById(@Path("id") id: Int): Response<Recipe>
     @POST("/api/getfavouriterecipes")
     @FormUrlEncoded
     suspend fun getFavouriteRecipes(
@@ -66,4 +70,5 @@ interface ApiInterface {
         @Field("user_id") user_id: Int,
         @Field("recipe_id") recipe_id: Int
     ):Response<GeneralResponse>
+
 }
