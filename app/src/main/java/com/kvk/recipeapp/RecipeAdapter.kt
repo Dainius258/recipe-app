@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.databinding.ItemRecipeBinding
+import com.kvk.recipeapp.fragmentSwitches.FragmentSwitcher
 import com.kvk.recipeapp.utils.ErrorResponseParser
 import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
@@ -25,6 +27,7 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
     private val tokenManager = TokenManager(context)
     private val token = tokenManager.getToken()
     private var favoriteRecipeIds: HashSet<Int> = HashSet()
+    private lateinit var fragmentManager: FragmentManager
 
     init {
         if (token != null && tokenManager.isTokenValid(token)) {
@@ -62,11 +65,13 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.binding.apply {
             var checkboxCard = cardviewIsFavourite
-            var checkbox = checkboxIsFavourite
+            //var checkbox = checkboxIsFavourite
             var recipeId = recipes[position].id
             val isFavorite = favoriteRecipeIds.contains(recipeId)
             tvRecipeTitle.text = recipes[position].title
             val base64ImageData = recipes[position].image
+            val imageButton = imgRecipe
+
             if(base64ImageData != null) {
                 val imageData = Base64.decode(base64ImageData, Base64.DEFAULT)
                 //Log.d("RECIPE_LIST", imageData.toString())
@@ -76,6 +81,11 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
                    checkboxCard.visibility = View.VISIBLE
                 } else {
                     checkboxCard.visibility = View.GONE
+                }
+
+                imageButton.setOnClickListener {
+                    val fragmentSwitcher = FragmentSwitcher()
+                    fragmentSwitcher.switchToRecipe(fragmentManager, recipeId)
                 }
 
                 checkboxIsFavourite.isChecked = isFavorite
@@ -159,5 +169,9 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
             }
         }
 
+    }
+
+    fun setFragmentManager(manager: FragmentManager) {
+        fragmentManager = manager
     }
 }

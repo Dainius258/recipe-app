@@ -11,13 +11,24 @@ import com.kvk.recipeapp.contentFragments.AccountLoginFragment
 import com.kvk.recipeapp.contentFragments.AddRecipeFragment
 import com.kvk.recipeapp.contentFragments.FavouriteRecipeListFragment
 import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
+import com.kvk.recipeapp.contentFragments.RecipeFragment
 import com.kvk.recipeapp.topBarFragments.AddRecipeTopFragment
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
 import com.kvk.recipeapp.topBarFragments.LoggedInTopFragment
 import com.kvk.recipeapp.topBarFragments.LoginRegisterTopFragment
+import com.kvk.recipeapp.topBarFragments.RecipeTopFragment
 import com.kvk.recipeapp.utils.TokenManager
 
 class FragmentSwitcher {
+    fun switchToRecipe(fragmentManager: FragmentManager, recipeId:Int) {
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack(null)
+
+        fragmentTransaction.replace(R.id.flFragmentBottomBar, HomeRecipeAccountBottomFragment())
+        fragmentTransaction.replace(R.id.flFragmentContents, RecipeFragment(recipeId))
+        fragmentTransaction.replace(R.id.flFragmentTopBar, RecipeTopFragment())
+        fragmentTransaction.commit()
+    }
     fun switchToHome(fragmentManager: FragmentManager) {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)

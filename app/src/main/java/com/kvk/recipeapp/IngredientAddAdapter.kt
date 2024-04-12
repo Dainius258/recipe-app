@@ -7,7 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class IngredientAdapter(private val ingredients: MutableList<String>) : RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>() {
+class IngredientAddAdapter(private val ingredients: MutableList<String>) : RecyclerView.Adapter<IngredientAddAdapter.IngredientViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_ingredient, parent, false)

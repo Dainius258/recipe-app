@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.kvk.recipeapp.IngredientAdapter
+import com.kvk.recipeapp.IngredientAddAdapter
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.TagAdapter
 import com.kvk.recipeapp.callbacks.CropResultCallback
@@ -48,7 +48,7 @@ class AddRecipeFragment : Fragment() {
     private var cropResultCallback: CropResultCallback? = null
     private lateinit var croppedImageUri: String
 
-    private lateinit var ingredientAdapter: IngredientAdapter
+    private lateinit var ingredientAddAdapter: IngredientAddAdapter
     private lateinit var ingredientsList: MutableList<String>
 
     companion object {
@@ -154,16 +154,16 @@ class AddRecipeFragment : Fragment() {
         })
 
         ingredientsList = mutableListOf()
-        ingredientAdapter = IngredientAdapter(ingredientsList)
+        ingredientAddAdapter = IngredientAddAdapter(ingredientsList)
 
-        rvIngredients.adapter = ingredientAdapter
+        rvIngredients.adapter = ingredientAddAdapter
         rvIngredients.layoutManager = LinearLayoutManager(requireContext())
 
         btnPlusIngredient.setOnClickListener {
             val ingredient = tietIngredientInput.text.toString().trim()
             if (ingredient.isNotEmpty()) {
                 ingredientsList.add(ingredient)
-                ingredientAdapter.notifyDataSetChanged()
+                ingredientAddAdapter.notifyDataSetChanged()
                 tietIngredientInput.text?.clear()
             }
         }
