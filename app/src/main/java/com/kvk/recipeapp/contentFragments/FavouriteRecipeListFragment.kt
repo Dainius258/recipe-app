@@ -54,6 +54,7 @@ class FavouriteRecipeListFragment : Fragment() {
                     //Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
                     val recipeList = response.body()!!
                     val adapter = RecipeAdapter(recipeList, requireContext())
+                    adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter
                 }
             } else {

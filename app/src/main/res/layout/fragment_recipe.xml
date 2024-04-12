@@ -1,144 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".contentFragments.RecipeFragment">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mcvRecipeImage"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        app:cardBackgroundColor="@color/mintLight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_centerInParent="true" />
 
-        <ImageView
-            android:id="@+id/imgvRecipe"
+    <ScrollView
+        android:id="@+id/scrollViewRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@+id/loadingProgressBar">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_launcher_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="match_parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvRecipeImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:cardBackgroundColor="@color/mintLight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgvRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/home_button" />
+            </com.google.android.material.card.MaterialCardView>
 
 
-    <ImageView
-        android:id="@+id/imgvThumbsUp"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/icon_like"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
+            <ImageView
+                android:id="@+id/imgvThumbsUp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/icon_like"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
 
-    <ImageView
-        android:id="@+id/imgvClock"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/icon_clock"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgvThumbsUp" />
+            <ImageView
+                android:id="@+id/imgvClock"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/icon_clock"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgvThumbsUp" />
 
-    <ImageView
-        android:id="@+id/imgvServing"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/icon_serving"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgvClock" />
+            <ImageView
+                android:id="@+id/imgvServing"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/icon_serving"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgvClock" />
 
-    <TextView
-        android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:text="50% Liked this recipe"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imgvThumbsUp"
-        app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:text="50% Liked this recipe"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imgvThumbsUp"
+                app:layout_constraintTop_toBottomOf="@+id/mcvRecipeImage" />
 
-    <TextView
-        android:id="@+id/tvTimeToCook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="7dp"
-        android:text="Ready in x hours x minutes"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imgvClock"
-        app:layout_constraintTop_toBottomOf="@+id/tvRating" />
+            <TextView
+                android:id="@+id/tvTimeToCook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="7dp"
+                android:text="Ready in x hours x minutes"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imgvClock"
+                app:layout_constraintTop_toBottomOf="@+id/tvRating" />
 
-    <TextView
-        android:id="@+id/tvServings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="7dp"
-        android:text="x servings"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imgvServing"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeToCook" />
+            <TextView
+                android:id="@+id/tvServings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="7dp"
+                android:text="x servings"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/imgvServing"
+                app:layout_constraintTop_toBottomOf="@+id/tvTimeToCook" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginRight="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvServings" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvServings" />
 
-    <TextView
-        android:id="@+id/tvGuide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginRight="6dp"
-        android:text="How to cook this lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget mi et metus vestibulum consectetur. Pellentesque non lectus neque. Integer magna augue, mattis sed vehicula eget, dignissim non tellus. Maecenas pharetra vestibulum nisl. Vivamus efficitur pretium finibus. Vivamus non ipsum dolor. "
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvIngredients" />
+            <TextView
+                android:id="@+id/tvGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="6dp"
+                android:text="How to cook this lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget mi et metus vestibulum consectetur. Pellentesque non lectus neque. Integer magna augue, mattis sed vehicula eget, dignissim non tellus. Maecenas pharetra vestibulum nisl. Vivamus efficitur pretium finibus. Vivamus non ipsum dolor. "
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvIngredients" />
 
-    <Button
-        android:id="@+id/btnRateRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/mintLight"
-        android:text="I MADE THIS!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGuide"
-        app:strokeColor="#000000"
-        app:strokeWidth="0.8dp" />
+            <Button
+                android:id="@+id/btnRateRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/mintLight"
+                android:text="I MADE THIS!"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGuide"
+                app:strokeColor="#000000"
+                app:strokeWidth="0.8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvComments"
-        android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRateRecipe" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvComments"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRateRecipe" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>
