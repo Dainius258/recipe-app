@@ -1,5 +1,6 @@
 package com.kvk.recipeapp
 
+import com.kvk.recipeapp.data.Comments
 import com.kvk.recipeapp.data.Favourites
 import com.kvk.recipeapp.data.GeneralResponse
 import com.kvk.recipeapp.data.LoginResponse
@@ -18,6 +19,8 @@ interface ApiInterface {
     suspend fun getAllRecipes():Response<Recipes>
     @GET("/api/recipe/{id}")
     suspend fun getRecipeById(@Path("id") id: Int): Response<Recipe>
+    @GET("/api/comments/{id}")
+    suspend fun getCommentsByRecipeId(@Path("id") id: Int): Response<Comments>
     @POST("/api/getfavouriterecipes")
     @FormUrlEncoded
     suspend fun getFavouriteRecipes(
@@ -70,5 +73,7 @@ interface ApiInterface {
         @Field("user_id") user_id: Int,
         @Field("recipe_id") recipe_id: Int
     ):Response<GeneralResponse>
+
+
 
 }

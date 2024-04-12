@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardComment"
+    android:layout_width="match_parent"
+    android:layout_height="76dp"
+    android:layout_marginTop="4dp"
+    app:cardBackgroundColor="@color/mint"
+    app:cardCornerRadius="0dp"
+    app:strokeColor="@color/black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tvCommentOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="4dp"
+            android:text="Name"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
+            android:text="How to cook this lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget mi et metus vestibulum consectetur. Pellentesque non lectus neque. Integer magna augue, mattis sed vehicula eget, dignissim non tellus. Maecenas pharetra vestibulum nisl. Vivamus efficitur pretium finibus. Vivamus non ipsum dolor. "
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvCommentOwner"
+            app:layout_constraintTop_toBottomOf="@+id/tvCommentOwner" />
+
+        <ImageButton
+            android:id="@+id/btnExpand"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="6dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@+id/tvComment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/down_arrow"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kvk.recipeapp.CommentAdapter
 import com.kvk.recipeapp.IngredientAdapter
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.utils.RetroFitInstance
@@ -38,10 +39,15 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         val token = tokenManager.getToken()
 
         val rootView = inflater.inflate(R.layout.fragment_recipe, container, false)
-        val recyclerViewIngredients: RecyclerView = rootView.findViewById(R.id.rvIngredients)
 
-        val layoutManager = GridLayoutManager(context, 1)
-        recyclerViewIngredients.layoutManager = layoutManager
+        val recyclerViewIngredients: RecyclerView = rootView.findViewById(R.id.rvIngredients)
+        val recyclerViewComments: RecyclerView = rootView.findViewById(R.id.rvComments)
+
+        val layoutManagerIngredients = GridLayoutManager(context, 1)
+        recyclerViewIngredients.layoutManager = layoutManagerIngredients
+
+        val layoutManagerComments = GridLayoutManager(context, 1)
+        recyclerViewComments.layoutManager = layoutManagerComments
 
         val scrollView = rootView.findViewById<ScrollView>(R.id.scrollViewRecipe)
         val loadingBar = rootView.findViewById<ProgressBar>(R.id.loadingProgressBar)
@@ -79,7 +85,7 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                     recipeImage.setImageBitmap(bitmap)
 
                     val ingredients = recipe.ingredients
-                    val adapter = IngredientAdapter(ingredients)
+                    val ingredientAdapter = IngredientAdapter(ingredients)
 
                     val totalTimeMinutes = recipe.total_time_minutes
                     val cookHours = totalTimeMinutes / 60
@@ -101,7 +107,31 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
 
                     guide.text = recipe.guide
 
-                    recyclerViewIngredients.adapter = adapter
+                    recyclerViewIngredients.adapter = ingredientAdapter
+
+                    // Very bad idea but im out of time
+                    GlobalScope.launch(Dispatchers.IO)  {
+                        val response = try {
+                            RetroFitInstance.api.getCommentsByRecipeId(recipeId)
+                        } catch (e: IOException) {
+                            Log.e("Network", "IOException: ${e.message}")
+                            return@launch
+                        } catch (e: HttpException) {
+                            Log.e("Network", "HttpException: ${e.message}")
+                            return@launch
+                        }
+                        if(response.isSuccessful && response.body() != null) {
+                            withContext(Dispatchers.Main) {
+                                val comments = response.body()!!
+                                //Log.d("COMMENTS", comments[1].username)
+                                val commentAdapter = CommentAdapter(comments)
+                                recyclerViewComments.adapter = commentAdapter
+                            }
+                        } else {
+                            Log.d("Network", "No comments")
+                        }
+                    }
+
 
                     scrollView.visibility = View.VISIBLE
                     loadingBar.visibility = View.GONE
