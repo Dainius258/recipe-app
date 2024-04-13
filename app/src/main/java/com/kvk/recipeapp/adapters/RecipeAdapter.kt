@@ -30,6 +30,9 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
     private lateinit var fragmentManager: FragmentManager
 
     init {
+
+        //filterRecipesByName("Chick")
+
         if (token != null && tokenManager.isTokenValid(token)) {
             val userId = tokenManager.getUserId()?.toInt()
             if (userId != null) {
@@ -104,6 +107,16 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
     }
     override fun getItemCount(): Int {
         return recipes.size
+    }
+
+    fun filterRecipesByName(query: String) {
+        val filteredRecipes = if (query.isEmpty()) {
+            recipes
+        } else {
+            recipes.filter { it.title.contains(query, ignoreCase = true) }
+        }
+        recipes = filteredRecipes
+        notifyDataSetChanged()
     }
 
     private fun addFavorite(recipeId: Int) {

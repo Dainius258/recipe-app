@@ -9,28 +9,38 @@ import com.kvk.recipeapp.contentFragments.MainRecipeListFragment
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
 
 val TAG = "TAG"
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilterSearchTopFragment.OnSearchQuerySubmitListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val FilterSearchFragment = FilterSearchTopFragment();
+
+        val filterSearchFragment = FilterSearchTopFragment();
+        filterSearchFragment.setSearchQuerySubmitListener(this)
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragmentTopBar, FilterSearchFragment)
+            replace(R.id.flFragmentTopBar, filterSearchFragment)
             commit()
         }
 
-        val FavRecAccFragment = FavouriteRecipeAccountBottomFragment();
+        val favRecAccFragment = FavouriteRecipeAccountBottomFragment();
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragmentBottomBar, FavRecAccFragment)
+            replace(R.id.flFragmentBottomBar, favRecAccFragment)
             commit()
         }
 
-        val RecipeListFragment = MainRecipeListFragment();
+        val recipeListFragment = MainRecipeListFragment();
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.flFragmentContents, RecipeListFragment)
+            replace(R.id.flFragmentContents, recipeListFragment)
             commit()
+        }
+    }
+
+    override fun onSearchQuerySubmit(query: String) {
+        val fragment = supportFragmentManager.findFragmentById(R.id.flFragmentContents)
+        if (fragment is MainRecipeListFragment) {
+            fragment.onSearchQuerySubmit(query)
         }
     }
 }
