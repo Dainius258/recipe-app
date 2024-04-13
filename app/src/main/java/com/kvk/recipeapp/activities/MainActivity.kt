@@ -43,4 +43,11 @@ class MainActivity : AppCompatActivity(), FilterSearchTopFragment.OnSearchQueryS
             fragment.onSearchQuerySubmit(query)
         }
     }
+
+    override fun onSearchQueryNewText(query: String) {
+        val fragment = supportFragmentManager.findFragmentById(R.id.flFragmentContents)
+        if (fragment is MainRecipeListFragment) {
+            fragment.onSearchQueryNewText(query)
+        }
+    }
 }

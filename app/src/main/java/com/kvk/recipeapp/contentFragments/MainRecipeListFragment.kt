@@ -22,17 +22,23 @@ import java.io.IOException
 
 
 class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuerySubmitListener {
+    private lateinit var adapter: RecipeAdapter
     override fun onSearchQuerySubmit(query: String) {
-        Log.d("MAINRECIPELIST", query)
+        if (::adapter.isInitialized) {
+            adapter.filterRecipesByName(query)
+        }
+    }
+
+    override fun onSearchQueryNewText(query: String) {
+        if(query == "") {
+            adapter.resetFilter()
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val filterFragment = FilterSearchTopFragment()
-        filterFragment.setSearchQuerySubmitListener(this)
-
         val rootView = inflater.inflate(R.layout.fragment_main_recipe_list, container, false)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rvRecipes)
 
@@ -40,7 +46,15 @@ class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuery
         recyclerView.layoutManager = layoutManager
         val loadingBar = rootView.findViewById<ProgressBar>(R.id.loadingProgressBar)
 
+        getAllRecipes(recyclerView, loadingBar)
 
+        val filterFragment = FilterSearchTopFragment()
+        filterFragment.setSearchQuerySubmitListener(this)
+
+        return rootView
+    }
+
+    fun getAllRecipes(recyclerView: RecyclerView, loadingBar: ProgressBar) {
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 RetroFitInstance.api.getAllRecipes()
@@ -53,12 +67,10 @@ class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuery
             }
             if(response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
-                    //Log.d("ResponseBody", "THEBODYOFRECIPE: ${response.body()}")
                     val recipeList = response.body()!!
-                    val adapter = RecipeAdapter(recipeList, requireContext())
+                    adapter = RecipeAdapter(recipeList, requireContext())
                     adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter
-
                     recyclerView.visibility = View.VISIBLE
                     loadingBar.visibility= View.GONE
                 }
@@ -66,6 +78,5 @@ class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuery
                 Log.e("Network", "Response not successful")
             }
         }
-        return rootView
     }
 }

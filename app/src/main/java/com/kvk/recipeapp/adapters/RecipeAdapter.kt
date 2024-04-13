@@ -22,17 +22,16 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter(private var originalRecipes: List<Recipe>, context: Context) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     inner class RecipeViewHolder(val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {}
     private val tokenManager = TokenManager(context)
     private val token = tokenManager.getToken()
+    private var recipes: List<Recipe> = originalRecipes
     private var favoriteRecipeIds: HashSet<Int> = HashSet()
     private lateinit var fragmentManager: FragmentManager
 
     init {
-
         //filterRecipesByName("Chick")
-
         if (token != null && tokenManager.isTokenValid(token)) {
             val userId = tokenManager.getUserId()?.toInt()
             if (userId != null) {
@@ -110,12 +109,17 @@ class RecipeAdapter(private var recipes: List<Recipe>, context: Context) : Recyc
     }
 
     fun filterRecipesByName(query: String) {
-        val filteredRecipes = if (query.isEmpty()) {
-            recipes
+        recipes = if (query.isEmpty()) {
+            originalRecipes
         } else {
-            recipes.filter { it.title.contains(query, ignoreCase = true) }
+            originalRecipes.filter { it.title.contains(query, ignoreCase = true) }
         }
-        recipes = filteredRecipes
+        notifyDataSetChanged()
+    }
+
+    fun resetFilter() {
+        Log.d("QUERY_CHECK", "RESET FILTER")
+        recipes = originalRecipes
         notifyDataSetChanged()
     }
 
