@@ -127,34 +127,17 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                             val userId = tokenManager.getUserId()?.toInt()
                             if (userId != null) {
                                 postComment(recipeId, userId, comment)
+                                dialog.dismiss()
+                                showCommentPostedDialog()
+                                updateCommentList(recyclerViewComments)
+                            } else {
+                                dialog.dismiss()
                             }
-                            dialog.dismiss()
-                            showCommentPostedDialog()
                         }
                         dialog.show()
                     }
-
                     // Very bad idea but im out of time
-                    GlobalScope.launch(Dispatchers.IO)  {
-                        val response = try {
-                            RetroFitInstance.api.getCommentsByRecipeId(recipeId)
-                        } catch (e: IOException) {
-                            Log.e("Network", "IOException: ${e.message}")
-                            return@launch
-                        } catch (e: HttpException) {
-                            Log.e("Network", "HttpException: ${e.message}")
-                            return@launch
-                        }
-                        if(response.isSuccessful && response.body() != null) {
-                            withContext(Dispatchers.Main) {
-                                val comments = response.body()!!
-                                val commentAdapter = CommentAdapter(comments)
-                                recyclerViewComments.adapter = commentAdapter
-                            }
-                        } else {
-                            Log.d("Network", "No comments")
-                        }
-                    }
+                    updateCommentList(recyclerViewComments)
                     scrollView.visibility = View.VISIBLE
                     loadingBar.visibility = View.GONE
                 }
@@ -165,7 +148,7 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         return rootView
     }
 
-    fun postComment(recipeId: Int, userId: Int, comment: String, ) {
+    private fun postComment(recipeId: Int, userId: Int, comment: String, ) {
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 RetroFitInstance.api.postComment(recipeId, userId, comment)
@@ -187,7 +170,30 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         }
     }
 
-    fun showCommentPostedDialog() {
+    private fun updateCommentList(recyclerViewComments: RecyclerView) {
+        GlobalScope.launch(Dispatchers.IO)  {
+            val response = try {
+                RetroFitInstance.api.getCommentsByRecipeId(recipeId)
+            } catch (e: IOException) {
+                Log.e("Network", "IOException: ${e.message}")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e("Network", "HttpException: ${e.message}")
+                return@launch
+            }
+            if(response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
+                    val comments = response.body()!!
+                    val commentAdapter = CommentAdapter(comments, requireContext())
+                    recyclerViewComments.adapter = commentAdapter
+                }
+            } else {
+                Log.d("Network", "No comments")
+            }
+        }
+    }
+
+    private fun showCommentPostedDialog() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Comment Posted")
         builder.setMessage("Your comment has been successfully posted.")

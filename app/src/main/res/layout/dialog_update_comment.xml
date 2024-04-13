@@ -25,12 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="6dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/green"
         android:text="SUBMIT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/etmlComment"
         app:strokeColor="#000000"
         app:strokeWidth="0.8dp" />
@@ -44,16 +44,25 @@
         android:backgroundTint="@color/yellow"
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/btnSubmitComment"
+        app:layout_constraintStart_toEndOf="@+id/btnDeleteComment"
+        app:layout_constraintTop_toBottomOf="@+id/etmlComment"
+        app:strokeColor="#000000"
+        app:strokeWidth="0.8dp" />
+
+    <Button
+        android:id="@+id/btnDeleteComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/red"
+        android:text="DELETE"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etmlComment"
         app:strokeColor="#000000"
         app:strokeWidth="0.8dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50121653" />
 </androidx.constraintlayout.widget.ConstraintLayout>

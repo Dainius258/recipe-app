@@ -7,11 +7,15 @@ import com.kvk.recipeapp.data.LoginResponse
 import com.kvk.recipeapp.data.Recipe
 import com.kvk.recipeapp.data.Recipes
 import com.kvk.recipeapp.data.Tags
+import com.kvk.recipeapp.data.UpdatedComment
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiInterface {
@@ -21,6 +25,13 @@ interface ApiInterface {
     suspend fun getRecipeById(@Path("id") id: Int): Response<Recipe>
     @GET("/api/comments/{id}")
     suspend fun getCommentsByRecipeId(@Path("id") id: Int): Response<Comments>
+    @PUT("/api/updatecomment/{id}")
+    suspend fun updateComment(
+        @Path("id") id: Int,
+        @Body requestBody: UpdatedComment
+    ): Response<GeneralResponse>
+    @DELETE("/api/deletecomment/{id}")
+    suspend fun deleteCommentById(@Path("id") id: Int): Response<GeneralResponse>
     @POST("/api/getfavouriterecipes")
     @FormUrlEncoded
     suspend fun getFavouriteRecipes(

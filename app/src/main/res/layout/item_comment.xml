@@ -44,12 +44,11 @@
             android:id="@+id/btnExpand"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginRight="6dp"
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toTopOf="@+id/tvComment"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnEdit"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/down_arrow"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
@@ -65,6 +64,22 @@
             app:layout_constraintBottom_toBottomOf="@+id/btnExpand"
             app:layout_constraintEnd_toStartOf="@+id/btnExpand"
             app:layout_constraintTop_toTopOf="@+id/btnExpand" />
+
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tvComment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_update"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
