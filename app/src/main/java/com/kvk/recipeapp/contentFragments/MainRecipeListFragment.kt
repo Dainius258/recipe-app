@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.R
-import com.kvk.recipeapp.RecipeAdapter
+import com.kvk.recipeapp.adapters.RecipeAdapter
 import com.kvk.recipeapp.utils.RetroFitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

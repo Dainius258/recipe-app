@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.kvk.recipeapp.IngredientAddAdapter
+import com.kvk.recipeapp.adapters.IngredientAddAdapter
 import com.kvk.recipeapp.R
-import com.kvk.recipeapp.TagAdapter
+import com.kvk.recipeapp.adapters.TagAdapter
 import com.kvk.recipeapp.callbacks.CropResultCallback
 import com.kvk.recipeapp.utils.ErrorResponseParser
 import com.kvk.recipeapp.utils.ImageUtils

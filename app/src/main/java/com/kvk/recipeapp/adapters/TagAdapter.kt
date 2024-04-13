@@ -1,4 +1,4 @@
-package com.kvk.recipeapp
+package com.kvk.recipeapp.adapters
 
 import android.content.res.ColorStateList
 import android.util.Log
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.kvk.recipeapp.R
 import com.kvk.recipeapp.data.Tag
 import com.kvk.recipeapp.utils.PreferenceManager
 

@@ -1,4 +1,4 @@
-package com.kvk.recipeapp
+package com.kvk.recipeapp.adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory

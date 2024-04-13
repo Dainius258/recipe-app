@@ -1,4 +1,4 @@
-package com.kvk.recipeapp
+package com.kvk.recipeapp.adapters
 
 import android.app.AlertDialog
 import android.content.Context
@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.kvk.recipeapp.R
 import com.kvk.recipeapp.data.Comment
 import com.kvk.recipeapp.data.UpdatedComment
 import com.kvk.recipeapp.utils.RetroFitInstance

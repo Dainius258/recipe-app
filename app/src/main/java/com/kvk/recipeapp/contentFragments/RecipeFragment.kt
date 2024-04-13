@@ -17,8 +17,8 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kvk.recipeapp.CommentAdapter
-import com.kvk.recipeapp.IngredientAdapter
+import com.kvk.recipeapp.adapters.CommentAdapter
+import com.kvk.recipeapp.adapters.IngredientAdapter
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
