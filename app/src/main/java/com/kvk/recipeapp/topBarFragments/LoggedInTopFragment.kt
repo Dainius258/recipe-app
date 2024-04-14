@@ -12,6 +12,6 @@ class LoggedInTopFragment : Fragment(R.layout.fragment_loggedin_top) {
         super.onViewCreated(view, savedInstanceState)
         val tokenManager = TokenManager(requireContext())
         val userTitle: TextView = view.findViewById(R.id.tvUser)
-
+        userTitle.text = "Welcome ${tokenManager.getUsername()}"
     }
 }

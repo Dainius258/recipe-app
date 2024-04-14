@@ -23,6 +23,8 @@ import retrofit2.http.Path
 interface ApiInterface {
     @GET("/api/getrecipes")
     suspend fun getAllRecipes():Response<Recipes>
+    @GET("/api/getuserrecipes/{user_id}")
+    suspend fun getUserRecipes(@Path("user_id") id: Int):Response<Recipes>
     @GET("/api/recipe/{id}")
     suspend fun getRecipeById(@Path("id") id: Int): Response<Recipe>
     @GET("/api/comments/{id}")

@@ -65,8 +65,8 @@ class AccountLoginFragment : Fragment(R.layout.fragment_account_login) {
                             fragmentSwitcher.switchToAccount(parentFragmentManager, requireContext())
                             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                             builder
-                                .setMessage(token)
-                                .setTitle(message)
+                                .setMessage("You have successfully logged in")
+                                .setTitle("Success")
                             val dialog: AlertDialog = builder.create()
                             dialog.show()
                         }

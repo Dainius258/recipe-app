@@ -47,6 +47,18 @@ class TokenManager(context: Context) {
         }
         return null
     }
+    fun getUsername(): String? {
+        val token = getToken()
+        if (token != null && isTokenValid(token)) {
+            try {
+                val jwt = JWT(token)
+                return jwt.getClaim("username").asString()
+            } catch (e: Exception) {
+                Log.e("TokenManager", "Error extracting username from token", e)
+            }
+        }
+        return null
+    }
     fun isTokenValid(token: String): Boolean {
         try {
             val jwt = JWT(token)
