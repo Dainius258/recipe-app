@@ -1,13 +1,15 @@
 package com.kvk.recipeapp
 
-import com.kvk.recipeapp.data.Comments
-import com.kvk.recipeapp.data.Favourites
-import com.kvk.recipeapp.data.GeneralResponse
-import com.kvk.recipeapp.data.LoginResponse
 import com.kvk.recipeapp.data.Recipe
-import com.kvk.recipeapp.data.Recipes
-import com.kvk.recipeapp.data.Tags
+import com.kvk.recipeapp.data.RecipeRating
 import com.kvk.recipeapp.data.UpdatedComment
+import com.kvk.recipeapp.data.lists.Comments
+import com.kvk.recipeapp.data.lists.Favourites
+import com.kvk.recipeapp.data.lists.Recipes
+import com.kvk.recipeapp.data.lists.Tags
+import com.kvk.recipeapp.data.responses.GeneralResponse
+import com.kvk.recipeapp.data.responses.LoginResponse
+import com.kvk.recipeapp.data.responses.RecipeRatingResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -30,6 +32,11 @@ interface ApiInterface {
         @Path("id") id: Int,
         @Body requestBody: UpdatedComment
     ): Response<GeneralResponse>
+    @PUT("/api/rate/{id}")
+    suspend fun rateRecipe(
+        @Path("id") id: Int,
+        @Body requestBody: RecipeRating
+    ): Response<RecipeRatingResponse>
     @DELETE("/api/deletecomment/{id}")
     suspend fun deleteCommentById(@Path("id") id: Int): Response<GeneralResponse>
     @POST("/api/getfavouriterecipes")
@@ -92,7 +99,5 @@ interface ApiInterface {
         @Field("user_id") user_id: Int,
         @Field("recipe_id") recipe_id: Int
     ):Response<GeneralResponse>
-
-
 
 }

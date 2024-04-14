@@ -1,4 +1,4 @@
-package com.kvk.recipeapp.data
+package com.kvk.recipeapp.data.requests
 
 data class RegisterRequest(
     val username: String,

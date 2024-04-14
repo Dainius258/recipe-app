@@ -1,4 +1,4 @@
-package com.kvk.recipeapp.data
+package com.kvk.recipeapp.data.responses
 
 data class LoginResponse(
     val token: String = "null",

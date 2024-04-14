@@ -11,5 +11,7 @@ data class Recipe(
     val servings: Int,
     val rating: Float,
     val created_at: Timestamp,
-    val updated_at: Timestamp
+    val updated_at: Timestamp,
+    val likes: Int,
+    val dislikes: Int
 )
