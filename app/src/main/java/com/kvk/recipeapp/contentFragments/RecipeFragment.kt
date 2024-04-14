@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.ScrollView
@@ -17,9 +18,10 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kvk.recipeapp.R
 import com.kvk.recipeapp.adapters.CommentAdapter
 import com.kvk.recipeapp.adapters.IngredientAdapter
-import com.kvk.recipeapp.R
+import com.kvk.recipeapp.data.RecipeRating
 import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
 import kotlinx.coroutines.Dispatchers
@@ -113,6 +115,30 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
                     guide.text = recipe.guide
                     recyclerViewIngredients.adapter = ingredientAdapter
 
+                    iMadeThisButton.setOnClickListener {
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                        val dialogLayout = LayoutInflater.from(context).inflate(R.layout.dialog_rate_recipe, null)
+                        builder.setView(dialogLayout)
+                        val dialog: AlertDialog = builder.create()
+
+                        dialogLayout.findViewById<ImageButton>(R.id.btnLike).setOnClickListener{
+                            showRecipeRatedDialog("You have liked the recipe!")
+                            val rating = RecipeRating(true, tokenManager.getUserId()!!.toInt())
+                            postRating(recipeId, rating, ratingText)
+                            dialog.dismiss()
+                        }
+                        dialogLayout.findViewById<ImageButton>(R.id.btnDislike).setOnClickListener{
+                            showRecipeRatedDialog("You have disliked the recipe!")
+                            val rating = RecipeRating(false, tokenManager.getUserId()!!.toInt())
+                            postRating(recipeId, rating, ratingText)
+                            dialog.dismiss()
+                        }
+                        dialogLayout.findViewById<Button>(R.id.btnNevermind).setOnClickListener {
+                            dialog.dismiss()
+                        }
+                        dialog.show()
+                    }
+
                     makeCommentButton.setOnClickListener {
                         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                         val dialogLayout = LayoutInflater.from(context).inflate(R.layout.dialog_write_comment, null)
@@ -146,6 +172,29 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
             }
         }
         return rootView
+    }
+
+    private fun postRating(recipeId: Int, ratingBody: RecipeRating, ratingTextView: TextView) {
+        GlobalScope.launch(Dispatchers.IO)  {
+            val response = try {
+                RetroFitInstance.api.rateRecipe(recipeId, ratingBody)
+            } catch (e: IOException) {
+                Log.e("Network", "IOException: ${e.message}")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e("Network", "HttpException: ${e.message}")
+                return@launch
+            }
+            if(response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
+                    val message = response.body()!!
+                    Log.d("RatingSuccess", "${message.message}, new rating: ${message.newRating}")
+                    ratingTextView.text = "${message.newRating}% Liked this recipe"
+                }
+            } else {
+                Log.d("Network", "Response not successful")
+            }
+        }
     }
 
     private fun postComment(recipeId: Int, userId: Int, comment: String, ) {
@@ -197,6 +246,16 @@ class RecipeFragment(private val recipeId: Int) : Fragment() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Comment Posted")
         builder.setMessage("Your comment has been successfully posted.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun showRecipeRatedDialog(ratedText: String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Recipe Rated")
+        builder.setMessage(ratedText)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
