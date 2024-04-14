@@ -9,15 +9,14 @@ import androidx.fragment.app.Fragment
 import com.kvk.recipeapp.R
 
 class FilterSearchTopFragment : Fragment() {
-
-    private var searchQuerySubmitListener: OnSearchQuerySubmitListener? = null
-    interface OnSearchQuerySubmitListener {
-        fun onSearchQuerySubmit(query: String)
-        fun onSearchQueryNewText(query: String)
+    interface OnSearchQueryListener {
+        fun onSearchQuery(query: String)
+        fun onSearchTextChange(query: String)
     }
 
-    fun setSearchQuerySubmitListener(listener: OnSearchQuerySubmitListener) {
-        searchQuerySubmitListener = listener
+    private var searchQueryListener: OnSearchQueryListener? = null
+    fun setSearchQueryListener(listener: OnSearchQueryListener) {
+        searchQueryListener = listener
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,11 +28,11 @@ class FilterSearchTopFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { searchQuerySubmitListener?.onSearchQuerySubmit(query) }
+                query?.let { searchQueryListener?.onSearchQuery(query) }
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { searchQuerySubmitListener?.onSearchQueryNewText(newText) }
+                newText?.let { searchQueryListener?.onSearchTextChange(newText) }
                 return true
             }
         })

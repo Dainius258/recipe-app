@@ -21,24 +21,14 @@ import retrofit2.HttpException
 import java.io.IOException
 
 
-class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuerySubmitListener {
+class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQueryListener {
     private lateinit var adapter: RecipeAdapter
-    override fun onSearchQuerySubmit(query: String) {
-        if (::adapter.isInitialized) {
-            adapter.filterRecipesByName(query)
-        }
-    }
-
-    override fun onSearchQueryNewText(query: String) {
-        if(query == "") {
-            adapter.resetFilter()
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val rootView = inflater.inflate(R.layout.fragment_main_recipe_list, container, false)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rvRecipes)
 
@@ -48,8 +38,10 @@ class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuery
 
         getAllRecipes(recyclerView, loadingBar)
 
-        val filterFragment = FilterSearchTopFragment()
-        filterFragment.setSearchQuerySubmitListener(this)
+        val filterFragment = parentFragmentManager.findFragmentById(R.id.flFragmentTopBar)
+        if(filterFragment is FilterSearchTopFragment) {
+            filterFragment.setSearchQueryListener(this)
+        }
 
         return rootView
     }
@@ -77,6 +69,15 @@ class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQuery
             } else {
                 Log.e("Network", "Response not successful")
             }
+        }
+    }
+
+    override fun onSearchQuery(query: String) {
+        adapter.filterRecipesByName(query)
+    }
+    override fun onSearchTextChange(query: String) {
+        if(query == "") {
+            adapter.resetFilter()
         }
     }
 }

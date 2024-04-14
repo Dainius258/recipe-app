@@ -2,6 +2,7 @@ package com.kvk.recipeapp.fragmentSwitches
 
 import android.app.AlertDialog
 import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.bottomBarFragments.FavouriteRecipeAccountBottomFragment
@@ -29,7 +30,7 @@ class FragmentSwitcher {
         fragmentTransaction.replace(R.id.flFragmentTopBar, RecipeTopFragment(recipeTitle))
         fragmentTransaction.commit()
     }
-    fun switchToHome(fragmentManager: FragmentManager) {
+    fun switchToHome(fragmentManager: FragmentManager): Fragment? {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
 
@@ -37,6 +38,7 @@ class FragmentSwitcher {
         fragmentTransaction.replace(R.id.flFragmentContents, MainRecipeListFragment())
         fragmentTransaction.replace(R.id.flFragmentTopBar, FilterSearchTopFragment())
         fragmentTransaction.commit()
+        return fragmentManager.findFragmentById(R.id.flFragmentContents)
     }
 
     fun switchToAddRecipes(fragmentManager: FragmentManager, context: Context) {
