@@ -46,7 +46,7 @@ class RecipeAdapter(private var originalRecipes: List<Recipe>, context: Context)
                                 notifyDataSetChanged() // Notify adapter once data is fetched
                             }
                         } else {
-                            Log.e("Network", "Failed to fetch favorite recipe IDs")
+                            Log.d("Network", "No favourites")
                         }
                     } catch (e: IOException) {
                         Log.e("Network", "IOException: ${e.message}")

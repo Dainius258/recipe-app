@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,10 +38,9 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
 
         val tokenManager = TokenManager(requireContext())
         val userId = tokenManager.getUserId()?.toInt()
-        val loadingBar = rootView.findViewById<ProgressBar>(R.id.loadingProgressBar)
 
         if (userId != null) {
-            getFavouriteRecipes(userId, recyclerView, loadingBar)
+            getFavouriteRecipes(userId, recyclerView, rootView)
         }
 
         val filterFragment = parentFragmentManager.findFragmentById(R.id.flFragmentTopBar)
@@ -50,7 +50,7 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
         return rootView
     }
 
-    fun getFavouriteRecipes(userId: Int, recyclerView: RecyclerView, loadingBar:ProgressBar) {
+    fun getFavouriteRecipes(userId: Int, recyclerView: RecyclerView, rootView: View) {
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 if (userId != null) {
@@ -68,14 +68,22 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
             if(response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
                     val recipeList = response.body()!!
+                    Log.d("Network", recipeList.toString())
+                    if(recipeList.size == 0) { // Temporary fix, the http request needs to be rewritten into GET
+                        rootView.findViewById<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
+                        rootView.findViewById<TextView>(R.id.tvNoFavouriteRecipes).visibility = View.VISIBLE
+                        return@withContext
+                    }
                     adapter = RecipeAdapter(recipeList,requireContext())
                     adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter
                     recyclerView.visibility = View.VISIBLE
-                    loadingBar.visibility = View.GONE
+                    rootView.findViewById<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
                 }
             } else {
-                Log.e("Network", "Response not successful")
+                Log.e("Network", "No favourite recipes")
+                rootView.findViewById<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
+                rootView.findViewById<TextView>(R.id.tvNoFavouriteRecipes).visibility = View.VISIBLE
             }
         }
     }

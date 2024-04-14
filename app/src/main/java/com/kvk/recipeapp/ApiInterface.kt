@@ -41,7 +41,7 @@ interface ApiInterface {
     ): Response<RecipeRatingResponse>
     @DELETE("/api/deletecomment/{id}")
     suspend fun deleteCommentById(@Path("id") id: Int): Response<GeneralResponse>
-    @POST("/api/getfavouriterecipes")
+    @POST("/api/getfavouriterecipes") // TODO: Needs to be replaced with GET
     @FormUrlEncoded
     suspend fun getFavouriteRecipes(
         @Field("user_id") user_id:Int

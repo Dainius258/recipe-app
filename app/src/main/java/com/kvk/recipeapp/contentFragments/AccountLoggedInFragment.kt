@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,11 +36,10 @@ class AccountLoggedInFragment : Fragment() {
         val tokenManager = TokenManager(requireContext())
 
         val logoutButton: Button = rootView.findViewById(R.id.btnLogout)
-        val progressBar: ProgressBar = rootView.findViewById(R.id.progressBar)
         val layoutManager = GridLayoutManager(context, 1)
         recyclerView.layoutManager = layoutManager
 
-        getUserRecipes(recyclerView, progressBar, tokenManager)
+        getUserRecipes(recyclerView, rootView, tokenManager)
 
         logoutButton.setOnClickListener {
             tokenManager.clearToken()
@@ -48,7 +48,7 @@ class AccountLoggedInFragment : Fragment() {
         return rootView
     }
 
-    fun getUserRecipes(recyclerView: RecyclerView, loadingBar: ProgressBar, tokenManager: TokenManager) {
+    fun getUserRecipes(recyclerView: RecyclerView, rootView: View, tokenManager: TokenManager) {
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 RetroFitInstance.api.getUserRecipes(tokenManager.getUserId()!!.toInt())
@@ -66,10 +66,12 @@ class AccountLoggedInFragment : Fragment() {
                     adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter
                     recyclerView.visibility = View.VISIBLE
-                    loadingBar.visibility= View.GONE
+                    rootView.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
                 }
             } else {
                 Log.e("Network", "Response not successful")
+                rootView.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+                rootView.findViewById<TextView>(R.id.tvNoRecipes).visibility = View.VISIBLE
             }
         }
     }
