@@ -63,8 +63,8 @@ interface ApiInterface {
         @Field("username") username: String,
         @Field("password") password: String,
     ): Response<LoginResponse>
-    @GET("/recipesbyids")
-    fun getRecipesByIds(@Query("ids") ids: List<Int>): Call<List<Recipe>>
+    @GET("/api/recipesbytagids")
+    fun getRecipesByTags(@Query("ids") ids: String): Call<List<Int>>
     @POST("/api/newrecipe")
     @FormUrlEncoded
     suspend fun postRecipe(

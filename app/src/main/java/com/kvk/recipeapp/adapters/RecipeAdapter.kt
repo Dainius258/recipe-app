@@ -1,5 +1,6 @@
 package com.kvk.recipeapp.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -108,6 +109,15 @@ class RecipeAdapter(private var originalRecipes: List<Recipe>, context: Context)
         return recipes.size
     }
 
+    fun filterRecipesById(ids: List<Int>) {
+        recipes = if (ids.isEmpty()) {
+            originalRecipes
+        } else {
+            originalRecipes.filter { ids.contains(it.id) }
+        }
+        notifyDataSetChanged()
+    }
+
     fun filterRecipesByName(query: String) {
         recipes = if (query.isEmpty()) {
             originalRecipes
@@ -121,6 +131,18 @@ class RecipeAdapter(private var originalRecipes: List<Recipe>, context: Context)
         Log.d("QUERY_CHECK", "RESET FILTER")
         recipes = originalRecipes
         notifyDataSetChanged()
+    }
+
+    fun noRecipesFound(context: Context) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder
+            .setTitle("No recipes found")
+            .setMessage("There are no recipes with one or more of your selected tags")
+            .setPositiveButton("Ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     private fun addFavorite(recipeId: Int) {

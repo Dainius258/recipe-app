@@ -19,7 +19,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 
 class FilterSearchTopFragment : Fragment() {
@@ -29,6 +32,8 @@ class FilterSearchTopFragment : Fragment() {
     interface OnSearchQueryListener {
         fun onSearchQuery(query: String)
         fun onSearchTextChange(query: String)
+        fun onTagFilterSearch(recipeIds: List<Int>)
+        fun onTagFilterSearchEmpty()
     }
     private var searchQueryListener: OnSearchQueryListener? = null
     fun setSearchQueryListener(listener: OnSearchQueryListener) {
@@ -45,7 +50,15 @@ class FilterSearchTopFragment : Fragment() {
         val filterButton: ImageButton = rootView.findViewById(R.id.imageButtonFilter)
 
         filterButton.setOnClickListener{
-            openTagsDialog()
+            openTagsDialog{ recipeIds ->
+                if(recipeIds.isNotEmpty()) {
+                    recipeIds?.let { searchQueryListener?.onTagFilterSearch(recipeIds) }
+                } else {
+                    searchQueryListener?.onTagFilterSearchEmpty()
+                }
+
+            }
+            //Log.d("QUERY_CHECK", getRecipeIdsByTagIds(listOf(40,44)).toString())
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -61,7 +74,29 @@ class FilterSearchTopFragment : Fragment() {
         return rootView
     }
 
-    private fun openTagsDialog() {
+    private fun getRecipeIdsByTagIds(tagIds: List<Int>, callback: (List<Int>?) -> Unit) {
+        val tagIdsString = tagIds.joinToString(",")
+        val call = RetroFitInstance.api.getRecipesByTags(tagIdsString)
+        call.enqueue(object : Callback<List<Int>> {
+            override fun onResponse(call: Call<List<Int>>, response: Response<List<Int>>) {
+                if (response.isSuccessful) {
+                    val recipeIds = response.body()
+                    Log.d("CHECK_QUERY", "SUCCESS")
+                    callback(recipeIds)
+                } else {
+                    Log.d("CHECK_QUERY", "NOT SUCCESS")
+                    callback(null)
+                }
+            }
+            override fun onFailure(call: Call<List<Int>>, t: Throwable) {
+                Log.e("CHECK_QUERY", "FAILURE")
+                callback(null)
+            }
+        })
+    }
+
+
+    private fun openTagsDialog(callback: (List<Int>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO)  {
             val response = try {
                 RetroFitInstance.api.getAllTags()
@@ -85,6 +120,17 @@ class FilterSearchTopFragment : Fragment() {
                         .setView(dialogLayout)
                         .setTitle("Select tag filter")
                         .setPositiveButton("Filter") { dialog, _ ->
+                            val stringSet: Set<String>? = preferenceManager.getSelectedTagIds()
+                            if (stringSet != null) {
+                                val integerList: List<Int> = stringSet!!.map { it.toInt() }
+                                getRecipeIdsByTagIds(integerList) { recipeIds ->
+                                    if (recipeIds != null) {
+                                        callback(recipeIds)
+                                    } else {
+                                        callback(emptyList())
+                                    }
+                                }
+                            }
                             dialog.dismiss()
                         }
                         .setNegativeButton("Cancel") {dialog, _ ->

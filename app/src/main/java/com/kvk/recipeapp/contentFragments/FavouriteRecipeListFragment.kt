@@ -101,4 +101,12 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
             adapter.resetFilter()
         }
     }
+
+    override fun onTagFilterSearch(recipeIds: List<Int>) {
+        adapter.filterRecipesById(recipeIds)
+    }
+
+    override fun onTagFilterSearchEmpty() {
+        adapter.noRecipesFound(requireContext())
+    }
 }
