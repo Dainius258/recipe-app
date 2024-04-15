@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.kvk.recipeapp.adapters.IngredientAddAdapter
 import com.kvk.recipeapp.R
+import com.kvk.recipeapp.adapters.IngredientAddAdapter
 import com.kvk.recipeapp.adapters.TagAdapter
 import com.kvk.recipeapp.callbacks.CropResultCallback
 import com.kvk.recipeapp.utils.ErrorResponseParser
@@ -120,6 +120,7 @@ class AddRecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferenceManager.clearSelectedTagIds()
         val view = inflater.inflate(R.layout.fragment_add_recipe, container, false)
 
         val btnPlusIngredient = view.findViewById<ImageButton>(R.id.btnPlusIngredient)
@@ -187,7 +188,7 @@ class AddRecipeFragment : Fragment() {
                 if(response.isSuccessful && response.body() != null) {
                     withContext(Dispatchers.Main) {
                         val tagList = response.body()!!
-                        val dialogLayout = LayoutInflater.from(context).inflate(R.layout.dialog_layout, null)
+                        val dialogLayout = LayoutInflater.from(context).inflate(R.layout.dialog_tags_layout, null)
                         val recyclerView = dialogLayout.findViewById<RecyclerView>(R.id.dialogRecyclerView)
                         recyclerView.layoutManager = GridLayoutManager(context, 3)
                         val adapter = TagAdapter(tagList, preferenceManager)

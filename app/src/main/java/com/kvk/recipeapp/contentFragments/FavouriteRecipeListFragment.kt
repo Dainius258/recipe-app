@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.adapters.RecipeAdapter
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
+import com.kvk.recipeapp.utils.PreferenceManager
 import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
 import kotlinx.coroutines.Dispatchers
@@ -24,11 +25,15 @@ import java.io.IOException
 
 class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQueryListener {
     private lateinit var adapter: RecipeAdapter
+    private val preferenceManager: PreferenceManager by lazy {
+        PreferenceManager(requireContext())
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferenceManager.clearSelectedTagIds()
 
         val rootView = inflater.inflate(R.layout.fragment_favourite_recipe_list, container, false)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rvFavouriteRecipes)
@@ -43,9 +48,9 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
             getFavouriteRecipes(userId, recyclerView, rootView)
         }
 
-        val filterFragment = parentFragmentManager.findFragmentById(R.id.flFragmentTopBar)
-        if(filterFragment is FilterSearchTopFragment) {
-            filterFragment.setSearchQueryListener(this)
+        val filterFragmentId = parentFragmentManager.findFragmentById(R.id.flFragmentTopBar)
+        if(filterFragmentId is FilterSearchTopFragment) {
+            filterFragmentId.setSearchQueryListener(this)
         }
         return rootView
     }
@@ -68,12 +73,11 @@ class FavouriteRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearch
             if(response.isSuccessful && response.body() != null) {
                 withContext(Dispatchers.Main) {
                     val recipeList = response.body()!!
-                    Log.d("Network", recipeList.toString())
                     if(recipeList.size == 0) { // Temporary fix, the http request needs to be rewritten into GET
                         rootView.findViewById<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
                         rootView.findViewById<TextView>(R.id.tvNoFavouriteRecipes).visibility = View.VISIBLE
-                        return@withContext
                     }
+                    Log.d("Function_test", "WORKS")
                     adapter = RecipeAdapter(recipeList,requireContext())
                     adapter.setFragmentManager(parentFragmentManager)
                     recyclerView.adapter = adapter

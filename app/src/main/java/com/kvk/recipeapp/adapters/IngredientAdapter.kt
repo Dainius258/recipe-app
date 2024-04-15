@@ -26,6 +26,7 @@ class IngredientAdapter(private val ingredients: Array<String>) : RecyclerView.A
     inner class IngredientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.textView)
 
+        
         fun bind(ingredient: String) {
             textView.text = ingredient
         }

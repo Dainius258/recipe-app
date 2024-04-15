@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.adapters.RecipeAdapter
 import com.kvk.recipeapp.fragmentSwitches.FragmentSwitcher
+import com.kvk.recipeapp.utils.PreferenceManager
 import com.kvk.recipeapp.utils.RetroFitInstance
 import com.kvk.recipeapp.utils.TokenManager
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +26,15 @@ import java.io.IOException
 
 class AccountLoggedInFragment : Fragment() {
     private lateinit var adapter: RecipeAdapter
+    private val preferenceManager: PreferenceManager by lazy {
+        PreferenceManager(requireContext())
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferenceManager.clearSelectedTagIds()
         val rootView = inflater.inflate(R.layout.fragment_account_logged_in, container, false)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rvRecipesUser)
         val fragmentSwitcher = FragmentSwitcher()

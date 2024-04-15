@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.utils.ErrorResponseParser
+import com.kvk.recipeapp.utils.PreferenceManager
 import com.kvk.recipeapp.utils.RetroFitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,7 +19,11 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class AccountRegisterFragment : Fragment(R.layout.fragment_account_register) {
+    private val preferenceManager: PreferenceManager by lazy {
+        PreferenceManager(requireContext())
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        preferenceManager.clearSelectedTagIds()
         super.onViewCreated(view, savedInstanceState)
         val switchLoginButton: Button = view.findViewById(R.id.btnSwitchLogin)
         val registerButton: Button = view.findViewById(R.id.btnRegister)

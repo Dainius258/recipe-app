@@ -61,11 +61,16 @@ class TagAdapter(private val tagList: List<Tag>, private val preferenceManager: 
             Log.d("SELECT_TAG", getSelectedTagIds().toString())
         }
 
-        private fun updateButtonColor() {
+        fun updateButtonColor() {
             val isSelected = selectedTagIds.contains(tag.id)
             val color = if (isSelected) R.color.green else R.color.mint
             btnTagName.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, color))
         }
+    }
+    fun clearSelectedTags() {
+        selectedTagIds.clear()
+        preferenceManager.saveSelectedTagIds(emptySet())
+        notifyDataSetChanged()
     }
 
     fun getSelectedTagIds(): Set<Int> {

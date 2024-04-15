@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kvk.recipeapp.R
 import com.kvk.recipeapp.adapters.RecipeAdapter
 import com.kvk.recipeapp.topBarFragments.FilterSearchTopFragment
+import com.kvk.recipeapp.utils.PreferenceManager
 import com.kvk.recipeapp.utils.RetroFitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -23,11 +24,15 @@ import java.io.IOException
 
 class MainRecipeListFragment : Fragment(), FilterSearchTopFragment.OnSearchQueryListener {
     private lateinit var adapter: RecipeAdapter
+    private val preferenceManager: PreferenceManager by lazy {
+        PreferenceManager(requireContext())
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferenceManager.clearSelectedTagIds()
 
         val rootView = inflater.inflate(R.layout.fragment_main_recipe_list, container, false)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rvRecipes)

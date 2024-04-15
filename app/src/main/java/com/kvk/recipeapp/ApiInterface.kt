@@ -10,6 +10,7 @@ import com.kvk.recipeapp.data.lists.Tags
 import com.kvk.recipeapp.data.responses.GeneralResponse
 import com.kvk.recipeapp.data.responses.LoginResponse
 import com.kvk.recipeapp.data.responses.RecipeRatingResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -19,6 +20,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiInterface {
     @GET("/api/getrecipes")
@@ -41,7 +43,7 @@ interface ApiInterface {
     ): Response<RecipeRatingResponse>
     @DELETE("/api/deletecomment/{id}")
     suspend fun deleteCommentById(@Path("id") id: Int): Response<GeneralResponse>
-    @POST("/api/getfavouriterecipes") // TODO: Needs to be replaced with GET
+    @POST("/api/getfavouriterecipes") // TODO: Needs to be replaced with GET ASAP
     @FormUrlEncoded
     suspend fun getFavouriteRecipes(
         @Field("user_id") user_id:Int
@@ -61,6 +63,8 @@ interface ApiInterface {
         @Field("username") username: String,
         @Field("password") password: String,
     ): Response<LoginResponse>
+    @GET("/recipesbyids")
+    fun getRecipesByIds(@Query("ids") ids: List<Int>): Call<List<Recipe>>
     @POST("/api/newrecipe")
     @FormUrlEncoded
     suspend fun postRecipe(
