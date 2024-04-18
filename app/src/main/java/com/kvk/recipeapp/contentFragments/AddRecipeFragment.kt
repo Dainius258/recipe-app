@@ -29,6 +29,7 @@ import com.kvk.recipeapp.utils.ErrorResponseParser
 import com.kvk.recipeapp.utils.ImageUtils
 import com.kvk.recipeapp.utils.PreferenceManager
 import com.kvk.recipeapp.utils.RetroFitInstance
+import com.kvk.recipeapp.utils.TokenManager
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -122,6 +123,8 @@ class AddRecipeFragment : Fragment() {
     ): View? {
         preferenceManager.clearSelectedTagIds()
         val view = inflater.inflate(R.layout.fragment_add_recipe, container, false)
+
+        val tokenManager = TokenManager(requireContext())
 
         val btnPlusIngredient = view.findViewById<ImageButton>(R.id.btnPlusIngredient)
         val btnPlusImage = view.findViewById<ImageButton>(R.id.btnPlusImage)
@@ -302,11 +305,16 @@ class AddRecipeFragment : Fragment() {
             }
             Log.d("RESULT_CHECK", "TITLE: $recipeTitle  INGREDIENTS: ${recipeIngredients.contentToString()} GUIDE: $recipeGuide" +
                     " MINUTES: $recipeMinutes SERVINGS: $recipeServings")
+            val userId = tokenManager.getUserId()?.toInt()
 
             GlobalScope.launch(Dispatchers.IO) {
                 val response = try {
                     // TODO add real user id from the token
-                    RetroFitInstance.api.postRecipe(23, recipeTitle, recipeImage,recipeIngredients,recipeGuide,recipeMinutes,recipeServings, recipeTags)
+                    if (userId != null) {
+                        RetroFitInstance.api.postRecipe(userId, recipeTitle, recipeImage,recipeIngredients,recipeGuide,recipeMinutes,recipeServings, recipeTags)
+                    } else {
+                        return@launch
+                    }
                 } catch (e: IOException) {
                     Log.e("Network", "IOException: ${e.message}")
                     return@launch
